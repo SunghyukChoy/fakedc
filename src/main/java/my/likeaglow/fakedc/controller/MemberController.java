@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import my.likeaglow.fakedc.model.AuthCheckVO;
 import my.likeaglow.fakedc.model.RegisterVO;
 import my.likeaglow.fakedc.service.MemberService;
 
@@ -77,12 +78,13 @@ public class MemberController {
   }
 
   /**
-   * ' 회원 로그인 페이지
+   * 회원 로그인 페이지
    * 
    * @return 로그인 페이지 호출
    */
   @GetMapping("/login")
   public ModelAndView login() {
+	// TODO 1번: mv 만들어서 테스트용 AuthCheckVO 객체를 만들어서 모델로 삽입하여 view에서 사용하도록 함 
     return null;
   }
 
@@ -93,7 +95,13 @@ public class MemberController {
    * @return 성공시 개인정보 상세페이지로 이동, 실패시 포스트백
    */
   @PostMapping("/login")
-  public ModelAndView loginProcess() {
+  public ModelAndView loginProcess(AuthCheckVO authCheckVO) {
+	// TODO 3번 : 아래 로깅을 통해서 AuthCkeckVO의 필드값을 체크하기 위해 AuthCheckVO 에 적절한 어노테이션 삽입, 아래 코드는 수정하지 말 것
+	logger.debug("로그인 객체 로그 : " + authCheckVO);
+
+	// TODO 4번: 멤버 서비스에 적절한 로그인 시도 메서드를 성공하여 결과에 따라 다음과 같이 처리한다
+	//			 로그인 성공시 : 메인 페이지("/")로 이동
+	//			 로그인 실패시 : 로그인 페이지를 다시 불러오되 입력한 아이디만 출력되도록 함 
     return null;
   }
 }
