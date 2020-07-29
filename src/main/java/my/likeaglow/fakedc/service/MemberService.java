@@ -32,4 +32,6 @@ public class MemberService {
 
     return registerVO.getMEM_ID();
   }
+  
+  // TODO 5번: 로그인 처리 메서드 추가
 }
