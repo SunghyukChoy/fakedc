@@ -22,6 +22,14 @@ public class MemberService {
       return null;
     }
     // TODO : 로직 추가
+    registerVO.setMEM_ID(registerVO.getMEM_ID());
+    registerVO.setMEM_NAME(registerVO.getMEM_NAME());
+    registerVO.setMEM_PASSWORD(registerVO.getMEM_PASSWORD());
+    registerVO.setEMAIL(registerVO.getEMAIL());
+    registerVO.setPHONE_NUM(registerVO.getPHONE_NUM());
+    registerVO.setBIRTHDAY(registerVO.getBIRTHDAY());
+    registerVO.setINFO_OFFER(registerVO.getINFO_OFFER());
+
     return registerVO.getMEM_ID();
   }
 }
