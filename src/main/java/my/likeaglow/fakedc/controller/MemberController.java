@@ -82,7 +82,7 @@ public class MemberController {
     logger.info("제출된 멤버 값 : " + registerVO);
     // registerVO에 담긴 값을 찍어내는 로거. RegisterVO 클래스에 @ToString 어노테이션 붙여줘서 가능.
 
-    return new ModelAndView("redriect:/member/login");
+    return new ModelAndView("redirect:/member/login");
     // 회운가입 성공 시 /member/login.jsp 페이지로 이동
   }
 
@@ -94,7 +94,20 @@ public class MemberController {
   @GetMapping("/login")
   public ModelAndView login() {
     // TODO 1번: mv 만들어서 테스트용 AuthCheckVO 객체를 만들어서 모델로 삽입하여 view에서 사용하도록 함
-    return null;
+    ModelAndView mv = new ModelAndView("member/login");
+
+    setTestLogin(mv);
+
+    return mv;
+  }
+
+  private void setTestLogin(ModelAndView mv) {
+    AuthCheckVO authCheckVO = new AuthCheckVO();
+
+    authCheckVO.setMEM_ID("TestID");
+    authCheckVO.setMEM_PASSWORD("TestPassword");
+
+    mv.addObject("vo", authCheckVO);
   }
 
   /**
@@ -107,11 +120,26 @@ public class MemberController {
   public ModelAndView loginProcess(AuthCheckVO authCheckVO) {
     // TODO 3번 : 아래 로깅을 통해서 AuthCkeckVO의 필드값을 체크하기 위해 AuthCheckVO 에 적절한 어노테이션 삽입, 아래
     // 코드는 수정하지 말 것
+
+    RegisterVO registerVO = new RegisterVO();
+    String registerId = registerVO.getMEM_ID();
+    String registerPassword = registerVO.getMEM_PASSWORD();
+
+    logger.info("registerId : " + registerId);
+
+    String loginId = memberService.login(authCheckVO, registerId, registerPassword);
+
+    if (loginId == null) {
+      ModelAndView mv = new ModelAndView("member/login");
+
+      mv.addObject("vo", authCheckVO);
+      return mv;
+    }
     logger.debug("로그인 객체 로그 : " + authCheckVO);
 
     // TODO 4번: 멤버 서비스에 적절한 로그인 시도 메서드를 성공하여 결과에 따라 다음과 같이 처리한다
     // 로그인 성공시 : 메인 페이지("/")로 이동
     // 로그인 실패시 : 로그인 페이지를 다시 불러오되 입력한 아이디만 출력되도록 함
-    return null;
+    return new ModelAndView("redirect:/");
   }
 }

@@ -102,13 +102,17 @@
       <h1>DCINSIDE 로그인</h1>
       <hr style="margin: 20px 0px; border: 1px solid #eee;" />
       <div class="form-control">
-        <label>아이디</label>
-        <input type="text" name="MEM_ID">
+        <label>아이디</label>        
+        <input type="text" name="MEM_ID" value="${ vo.MEM_ID }" />
       </div>
       <div class="form-control">
-        <label>비밀번호</label>
-        <input type="password" name="MEM_PASSWORD">
-      </div>      
+        <label>비밀번호</label>        
+        <input type="password" name="MEM_PASSWORD" value="${ vo.MEM_PASSWORD }" />
+      </div>
+      <div class="form-button-group">
+        <button type="submit" class="confirm">로그인</button>
+        <button type="reset" class="danger">정보 다시쓰기</button>
+      </div>
     </form>
     
   </div>
