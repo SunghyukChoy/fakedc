@@ -55,7 +55,7 @@ public class MemberService {
    * @param registerVO
    * @return
    */
-  public String login(AuthCheckVO authCheckVO, String registerId, String registerPassword) {
+  public String login(AuthCheckVO authCheckVO) {
     logger.info("MemberService.login() 시작");
     // logger.info("login()에서 받은 registerVO.getMEM_ID : " + registerVO.getMEM_ID());
 
@@ -64,12 +64,25 @@ public class MemberService {
       return null;
     }
 
-//    if (!authCheckVO.getMEM_ID().equals(registerId) || !authCheckVO.getMEM_PASSWORD().equals(registerPassword)) {
-//      return null;
-//    }
+    RegisterVO registerVO = new RegisterVO();
+    setTestLogin(registerVO);
+
+    logger.info("setTestLogin return : " + registerVO);
+
+    if (!authCheckVO.getMEM_ID().equals(registerVO.getMEM_ID())
+        || !authCheckVO.getMEM_PASSWORD().equals(registerVO.getMEM_PASSWORD())) {
+      logger.info("MemberService.login return 값 : null");
+      return null;
+    }
 
     logger.info("MemberService.login return하는 authCheck.getMEM_ID() : " + authCheckVO.getMEM_ID());
     return authCheckVO.getMEM_ID();
+  }
+
+  private RegisterVO setTestLogin(RegisterVO registerVO) {
+    registerVO.setMEM_ID("coffee");
+    registerVO.setMEM_PASSWORD("1111");
+    return registerVO;
   }
 
 }

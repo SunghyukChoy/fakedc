@@ -121,13 +121,7 @@ public class MemberController {
     // TODO 3번 : 아래 로깅을 통해서 AuthCkeckVO의 필드값을 체크하기 위해 AuthCheckVO 에 적절한 어노테이션 삽입, 아래
     // 코드는 수정하지 말 것
 
-    RegisterVO registerVO = new RegisterVO();
-    String registerId = registerVO.getMEM_ID();
-    String registerPassword = registerVO.getMEM_PASSWORD();
-
-    logger.info("registerId : " + registerId);
-
-    String loginId = memberService.login(authCheckVO, registerId, registerPassword);
+    String loginId = memberService.login(authCheckVO);
 
     if (loginId == null) {
       ModelAndView mv = new ModelAndView("member/login");
