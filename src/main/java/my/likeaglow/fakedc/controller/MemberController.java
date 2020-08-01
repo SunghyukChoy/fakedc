@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import my.likeaglow.fakedc.model.AuthCheckVO;
+import my.likeaglow.fakedc.model.LoginMemberVO;
 import my.likeaglow.fakedc.model.RegisterVO;
 import my.likeaglow.fakedc.service.MemberService;
 
@@ -120,16 +121,17 @@ public class MemberController {
   public ModelAndView loginProcess(AuthCheckVO authCheckVO) {
     // TODO 3번 : 아래 로깅을 통해서 AuthCkeckVO의 필드값을 체크하기 위해 AuthCheckVO 에 적절한 어노테이션 삽입, 아래
     // 코드는 수정하지 말 것
+    logger.debug("로그인 객체 로그 : " + authCheckVO);
 
-    String loginId = memberService.login(authCheckVO);
+    LoginMemberVO loginVO = memberService.login(authCheckVO);
 
-    if (loginId == null) {
+    if (loginVO.getERR_CD() != 1) {
       ModelAndView mv = new ModelAndView("member/login");
+      authCheckVO.setMEM_PASSWORD("");
 
       mv.addObject("vo", authCheckVO);
       return mv;
     }
-    logger.debug("로그인 객체 로그 : " + authCheckVO);
 
     // TODO 4번: 멤버 서비스에 적절한 로그인 시도 메서드를 성공하여 결과에 따라 다음과 같이 처리한다
     // 로그인 성공시 : 메인 페이지("/")로 이동
