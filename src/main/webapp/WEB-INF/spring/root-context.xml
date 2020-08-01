@@ -22,8 +22,7 @@
   <bean id="sqlSessionFactory"
     class="org.mybatis.spring.SqlSessionFactoryBean">
     <property name="dataSource" ref="dataSource" />
-    <property name="configLocation"
-      value="classpath:/mybatis-config.xml" />
+    <property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml" />
   </bean>
 
   <bean id="txManager"
@@ -40,6 +39,7 @@
   </bean>
 
   <!-- MyBatis Mappers -->
+  <!--  Repository interface의 impl 클래스를 필요없게 만드는 bean. interface에서 mapper로 바로 접근할 수 있게 해준다. -->
   <bean id="memberRepository"
     class="org.mybatis.spring.mapper.MapperFactoryBean">
     <property name="mapperInterface"
