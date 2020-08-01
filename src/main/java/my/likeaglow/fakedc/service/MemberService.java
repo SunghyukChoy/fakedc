@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import my.likeaglow.fakedc.model.AuthCheckVO;
-import my.likeaglow.fakedc.model.LoginMemberVO;
-import my.likeaglow.fakedc.model.RegisterVO;
+import my.likeaglow.fakedc.model.AuthCheckDTO;
+import my.likeaglow.fakedc.model.LoginMemberDTO;
+import my.likeaglow.fakedc.model.RegisterDTO;
 import my.likeaglow.fakedc.repository.MemberRepository;
 
 @Service
@@ -24,7 +24,7 @@ public class MemberService {
    * @param registerVO 회원정보
    * @return 성공시 MEM_ID 반환, 실패시 null 반환
    */
-  public String register(RegisterVO registerVO) {
+  public String register(RegisterDTO registerVO) {
 
     logger.info("받은 registerVO.getMEM_ID : " + registerVO.getMEM_ID());
     logger.info("받은 registerVO.getMEM_ID의 길이 : " + registerVO.getMEM_ID().length());
@@ -61,7 +61,7 @@ public class MemberService {
    * @param registerVO
    * @return
    */
-  public LoginMemberVO login(AuthCheckVO authCheckVO) {
+  public LoginMemberDTO login(AuthCheckDTO authCheckVO) {
     logger.info("MemberService.login() 시작");
     // logger.info("login()에서 받은 registerVO.getMEM_ID : " + registerVO.getMEM_ID());
 
@@ -70,7 +70,7 @@ public class MemberService {
       return null;
     }
 
-    LoginMemberVO result = memberRepository.checkAuth(authCheckVO);
+    LoginMemberDTO result = memberRepository.checkAuth(authCheckVO);
 
 //    logger.info("MemberService.login return하는 authCheck.getMEM_ID() : " + authCheckVO.getMEM_ID());
     return result;

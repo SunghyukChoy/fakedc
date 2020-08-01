@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import my.likeaglow.fakedc.model.AuthCheckVO;
-import my.likeaglow.fakedc.model.LoginMemberVO;
-import my.likeaglow.fakedc.model.RegisterVO;
+import my.likeaglow.fakedc.model.AuthCheckDTO;
+import my.likeaglow.fakedc.model.LoginMemberDTO;
+import my.likeaglow.fakedc.model.RegisterDTO;
 import my.likeaglow.fakedc.service.MemberService;
 
 @Controller
@@ -38,7 +38,7 @@ public class MemberController {
 
   // 기본값 설정 메소드.
   private void setTestRegister(ModelAndView mv) {
-    RegisterVO registerVO = new RegisterVO();
+    RegisterDTO registerVO = new RegisterDTO();
     // RegisterVO 객체 생성
     registerVO.setMEM_ID("likeaglow");
     registerVO.setMEM_NAME("최성혁");
@@ -62,7 +62,7 @@ public class MemberController {
    * @return 성공시 로그인 화면으로 전환, 실패시 포스트백
    */
   @PostMapping("/register")
-  public ModelAndView registerProcess(RegisterVO registerVO) {
+  public ModelAndView registerProcess(RegisterDTO registerVO) {
     // ModelAndView에서 Model의 의미 : 데이터를 담을 그릇을 의미. Value Object(VO).
     // RegisterVO는 회원가입 데이터를 담는 객체
     String memberId = memberService.register(registerVO);
@@ -103,7 +103,7 @@ public class MemberController {
   }
 
   private void setTestLogin(ModelAndView mv) {
-    AuthCheckVO authCheckVO = new AuthCheckVO();
+    AuthCheckDTO authCheckVO = new AuthCheckDTO();
 
     authCheckVO.setMEM_ID("TestID");
     authCheckVO.setMEM_PASSWORD("TestPassword");
@@ -118,12 +118,12 @@ public class MemberController {
    * @return 성공시 개인정보 상세페이지로 이동, 실패시 포스트백
    */
   @PostMapping("/login")
-  public ModelAndView loginProcess(AuthCheckVO authCheckVO) {
+  public ModelAndView loginProcess(AuthCheckDTO authCheckVO) {
     // TODO 3번 : 아래 로깅을 통해서 AuthCkeckVO의 필드값을 체크하기 위해 AuthCheckVO 에 적절한 어노테이션 삽입, 아래
     // 코드는 수정하지 말 것
     logger.debug("로그인 객체 로그 : " + authCheckVO);
 
-    LoginMemberVO loginVO = memberService.login(authCheckVO);
+    LoginMemberDTO loginVO = memberService.login(authCheckVO);
 
     if (loginVO.getERR_CD() != 1) {
       ModelAndView mv = new ModelAndView("member/login");
