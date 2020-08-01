@@ -75,11 +75,4 @@ public class MemberService {
 //    logger.info("MemberService.login return하는 authCheck.getMEM_ID() : " + authCheckVO.getMEM_ID());
     return result;
   }
-
-  private RegisterVO setTestLogin(RegisterVO registerVO) {
-    registerVO.setMEM_ID("coffee");
-    registerVO.setMEM_PASSWORD("1111");
-    return registerVO;
-  }
-
 }
