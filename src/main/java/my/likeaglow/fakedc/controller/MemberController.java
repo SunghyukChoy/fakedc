@@ -1,5 +1,7 @@
 package my.likeaglow.fakedc.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,12 +120,12 @@ public class MemberController {
    * @return 성공시 개인정보 상세페이지로 이동, 실패시 포스트백
    */
   @PostMapping("/login")
-  public ModelAndView loginProcess(AuthCheckDTO authCheckVO) {
+  public ModelAndView loginProcess(AuthCheckDTO authCheckVO, HttpSession session) {
     // TODO 3번 : 아래 로깅을 통해서 AuthCkeckVO의 필드값을 체크하기 위해 AuthCheckVO 에 적절한 어노테이션 삽입, 아래
     // 코드는 수정하지 말 것
     logger.debug("로그인 객체 로그 : " + authCheckVO);
 
-    LoginMemberDTO loginVO = memberService.login(authCheckVO);
+    LoginMemberDTO loginVO = memberService.login(authCheckVO, session);
 
     if (authCheckVO.getERR_CD() != 1) {
       ModelAndView mv = new ModelAndView("member/login");
@@ -137,5 +139,35 @@ public class MemberController {
     // 로그인 성공시 : 메인 페이지("/")로 이동
     // 로그인 실패시 : 로그인 페이지를 다시 불러오되 입력한 아이디만 출력되도록 함
     return new ModelAndView("redirect:/");
+  }
+
+  @GetMapping("/logout")
+  public String logout(HttpSession session) {
+
+    session.invalidate();
+
+    return "redirect:/";
+  }
+
+  @GetMapping("/myinfo")
+  public ModelAndView myinfo(HttpSession session) {
+
+    LoginMemberDTO loginMember = (LoginMemberDTO) session.getAttribute("member");
+
+    if (loginMember == null) {
+      return new ModelAndView("redirect:/member/login");
+    }
+
+    // 이후는 사용자가 로그인을 정상적으로 한것이기 떄문에 사용자 이름을 가져와도 이상이 없을 것
+
+    // TODO: 회원의 정보를 가져옴
+
+    ModelAndView mv = new ModelAndView();
+
+    mv.setViewName("member/myinfo");
+    // 임시로 출력을 위해서...
+    mv.addObject("member", loginMember);
+
+    return mv;
   }
 }

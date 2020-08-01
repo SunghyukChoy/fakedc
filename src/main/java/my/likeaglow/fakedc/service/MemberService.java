@@ -1,5 +1,7 @@
 package my.likeaglow.fakedc.service;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,18 +50,28 @@ public class MemberService {
   /**
    * 로그인
    * 
+   * @param session
    * @param registerVO
    * @return
    */
-  public LoginMemberDTO login(AuthCheckDTO authCheckVO) {
+  public LoginMemberDTO login(AuthCheckDTO authCheckDTO, HttpSession session) {
     logger.info("MemberService.login() 시작");
 
     // 유효성 검사
-    if (authCheckVO.getMEM_ID().equals("") || authCheckVO.getMEM_PASSWORD().equals("")) {
+    if (authCheckDTO.getMEM_ID().equals("") || authCheckDTO.getMEM_PASSWORD().equals("")) {
       logger.info("MemberService.login return 값 : null");
       return null;
     }
 
-    return memberRepository.checkAuth(authCheckVO);
+    LoginMemberDTO result = memberRepository.checkAuth(authCheckDTO);
+
+    if (authCheckDTO.getERR_CD() == 1) {
+      // 로그인 성공 로직
+//      session.setAttribute("MEM_ID", result.getMEM_ID());
+//      session.setAttribute("MEM_NAME", result.getMEM_NAME());
+      session.setAttribute("member", result);
+    }
+
+    return result;
   }
 }
