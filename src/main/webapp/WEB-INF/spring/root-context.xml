@@ -40,10 +40,10 @@
   </bean>
 
   <!-- MyBatis Mappers -->
-  <bean id="memberMapper"
+  <bean id="memberRepository"
     class="org.mybatis.spring.mapper.MapperFactoryBean">
     <property name="mapperInterface"
-      value="my.likeaglow.fakedc.repository.mapper.MemberMapper" />
+      value="my.likeaglow.fakedc.repository.MemberRepository" />
     <property name="sqlSessionFactory" ref="sqlSessionFactory" />
   </bean>
 

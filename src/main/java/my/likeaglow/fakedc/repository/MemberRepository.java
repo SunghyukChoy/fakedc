@@ -1,16 +1,18 @@
 package my.likeaglow.fakedc.repository;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import my.likeaglow.fakedc.model.AuthCheckDTO;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
+import my.likeaglow.fakedc.model.MemberVO;
 
 @Repository
-public class MemberRepository {
+public interface MemberRepository {
 
-  public LoginMemberDTO checkAuth(AuthCheckDTO authCheckVO) {
-    // TODO Auto-generated method stub
-    return new LoginMemberDTO("TestID", "최성혁", 1, "로그인 성공");
-  }
+  public List<MemberVO> findAll();
+
+  public LoginMemberDTO checkAuth(AuthCheckDTO authCheckDTO);
 
 }

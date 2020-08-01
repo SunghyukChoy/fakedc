@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="my.likeaglow.fakedc.repository.mapper.MemberMapper">
+<mapper namespace="my.likeaglow.fakedc.repository.MemberRepository">
   <select id="findAll" resultType="my.likeaglow.fakedc.model.MemberVO">
     SELECT * FROM member
+  </select>
+  
+  <select id="checkAuth" 
+    parameterType="my.likeaglow.fakedc.model.AuthCheckDTO" 
+    resultType="my.likeaglow.fakedc.model.LoginMemberDTO"
+    statementType="CALLABLE">
+    { call MEM_sr_AuthCheck (#{MEM_ID}, #{MEM_PASSWORD}, #{ERR_CD, mode=OUT, jdbcType=INTEGER}, #{ERR_MSG, mode=OUT, jdbcType=VARCHAR}) }
   </select>
 </mapper>
