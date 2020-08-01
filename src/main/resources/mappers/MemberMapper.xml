@@ -9,6 +9,14 @@
     parameterType="my.likeaglow.fakedc.model.AuthCheckDTO" 
     resultType="my.likeaglow.fakedc.model.LoginMemberDTO"
     statementType="CALLABLE">
+    <!-- statementType="CALLABLE : 프로스저 실행을 의미  프로시저를 실행하여 처리함으로써 insert나 update 태그 등이 필요없음.-->
     { call MEM_sr_AuthCheck (#{MEM_ID}, #{MEM_PASSWORD}, #{ERR_CD, mode=OUT, jdbcType=INTEGER}, #{ERR_MSG, mode=OUT, jdbcType=VARCHAR}) }
+    <!--  ERR_CO, ERR_MSG의 결과는 parameterType에 담긴다. -->
+  </select>
+  
+  <select id="register" 
+    parameterType="my.likeaglow.fakedc.model.RegisterDTO"
+    statementType="CALLABLE">
+    { call MEM_in_Register (#{MEM_ID}, #{MEM_NAME}, #{MEM_PASSWORD}, #{EMAIL}, #{PHONE_NUM}, #{BIRTHDAY}, #{INFO_OFFER}, #{ERR_CD, mode=OUT, jdbcType=INTEGER}, #{ERR_MSG, mode=OUT, jdbcType=VARCHAR}) }
   </select>
 </mapper>

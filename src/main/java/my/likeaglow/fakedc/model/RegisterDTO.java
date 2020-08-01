@@ -18,4 +18,7 @@ public class RegisterDTO {
   private String PHONE_NUM;
   private String BIRTHDAY;
   private String INFO_OFFER; // `agree` or `disagree`
+  private int ERR_CD;
+  private String ERR_MSG;
+
 }

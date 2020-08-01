@@ -58,21 +58,21 @@ public class MemberController {
   /**
    * 회원가입 프로세스
    * 
-   * @param registerVO 회원 정보
+   * @param registerDTO 회원 정보
    * @return 성공시 로그인 화면으로 전환, 실패시 포스트백
    */
   @PostMapping("/register")
-  public ModelAndView registerProcess(RegisterDTO registerVO) {
+  public ModelAndView registerProcess(RegisterDTO registerDTO) {
     // ModelAndView에서 Model의 의미 : 데이터를 담을 그릇을 의미. Value Object(VO).
     // RegisterVO는 회원가입 데이터를 담는 객체
-    String memberId = memberService.register(registerVO);
+    String memberId = memberService.register(registerDTO);
     // registerVO를 매개변수로 넘겨 memberService 클래스의 register 메소드 실행
     // 회원가입 성공 시 registerVO.getMEM_ID() 값을 변수 memberId에 저장.
 
     if (memberId == null) { // 회원가입 실패 시 포스트 백(postback)
       ModelAndView mv = new ModelAndView("member/register");
       // 이동할 (다시 되돌아갈) view 페이지 설정하면서 mv 객체 생성
-      mv.addObject("vo", registerVO);
+      mv.addObject("vo", registerDTO);
       // 매개변수로 받은 registerVO를 value로, "vo"를 key로 하여 mv 객체에 저장.
       // 사용자가 입력한 데이터를 그대로 유지하여 view 페이지로 돌아감을 의미.
       return mv;
@@ -80,7 +80,7 @@ public class MemberController {
       // view 페이지에서는 다시 데이터를 입력 받아 현재 메소드로 이동.
     }
 
-    logger.info("제출된 멤버 값 : " + registerVO);
+    logger.info("제출된 멤버 값 : " + registerDTO);
     // registerVO에 담긴 값을 찍어내는 로거. RegisterVO 클래스에 @ToString 어노테이션 붙여줘서 가능.
 
     return new ModelAndView("redirect:/member/login");
@@ -105,8 +105,8 @@ public class MemberController {
   private void setTestLogin(ModelAndView mv) {
     AuthCheckDTO authCheckVO = new AuthCheckDTO();
 
-    authCheckVO.setMEM_ID("TestID");
-    authCheckVO.setMEM_PASSWORD("TestPassword");
+    authCheckVO.setMEM_ID("LIKEAGLOW");
+    authCheckVO.setMEM_PASSWORD("1234");
 
     mv.addObject("vo", authCheckVO);
   }
@@ -125,7 +125,7 @@ public class MemberController {
 
     LoginMemberDTO loginVO = memberService.login(authCheckVO);
 
-    if (loginVO.getERR_CD() != 1) {
+    if (authCheckVO.getERR_CD() != 1) {
       ModelAndView mv = new ModelAndView("member/login");
       authCheckVO.setMEM_PASSWORD("");
 

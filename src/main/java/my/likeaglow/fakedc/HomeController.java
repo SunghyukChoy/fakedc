@@ -28,7 +28,7 @@ public class HomeController {
   private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
   @Autowired
-  MemberRepository memberMapper;
+  MemberRepository memberRepository;
 
   /**
    * Simply selects the home view to render by returning its name.
@@ -49,7 +49,7 @@ public class HomeController {
 
   @GetMapping(value = "/test")
   public String test() {
-    List<MemberVO> members = memberMapper.findAll();
+    List<MemberVO> members = memberRepository.findAll();
 
     for (MemberVO memberVO : members) {
       logger.info("result : " + memberVO);
@@ -64,7 +64,7 @@ public class HomeController {
     AuthCheckDTO auth = new AuthCheckDTO("LIKEAGLOW", "1234", -1, null);
 
     // Action (테스트 하려고 하는 메서드 실행)
-    LoginMemberDTO login = memberMapper.checkAuth(auth);
+    LoginMemberDTO login = memberRepository.checkAuth(auth);
 
     // Assert (결과 확인, 예상된 결과가 나왔는지)
     if (login != null && login.getMEM_ID().equals(auth.getMEM_ID())) {

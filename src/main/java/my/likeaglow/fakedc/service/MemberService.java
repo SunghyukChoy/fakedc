@@ -21,40 +21,30 @@ public class MemberService {
   /**
    * 회원 가입
    * 
-   * @param registerVO 회원정보
+   * @param registerDTO 회원정보
    * @return 성공시 MEM_ID 반환, 실패시 null 반환
    */
-  public String register(RegisterDTO registerVO) {
+  public String register(RegisterDTO registerDTO) {
 
-    logger.info("받은 registerVO.getMEM_ID : " + registerVO.getMEM_ID());
-    logger.info("받은 registerVO.getMEM_ID의 길이 : " + registerVO.getMEM_ID().length());
-    logger.info("받은 registerVO.getMEM_ID는  빈 문자열인가 : " + registerVO.getMEM_ID().equals(""));
-
-    // 대충 DB에 넣는 로직
-    if (registerVO.getMEM_ID().equals("") || registerVO.getMEM_NAME().equals("")
-        || registerVO.getMEM_PASSWORD().equals("") || registerVO.getEMAIL().equals("")
-        || registerVO.getBIRTHDAY().equals("") || registerVO.getPHONE_NUM().equals("")
-        || registerVO.getINFO_OFFER().equals("")) {
+    if (registerDTO.getMEM_ID().equals("") || registerDTO.getMEM_NAME().equals("")
+        || registerDTO.getMEM_PASSWORD().equals("") || registerDTO.getEMAIL().equals("")
+        || registerDTO.getBIRTHDAY().equals("") || registerDTO.getPHONE_NUM().equals("")
+        || registerDTO.getINFO_OFFER().equals("")) {
       logger.info("MemberService.register return 값 : null");
       return null;
     }
 
-    // TODO : 로직 추가
-    logger.info("받은 registerVO : " + registerVO);
-    registerVO.setMEM_ID(registerVO.getMEM_ID());
-    registerVO.setMEM_NAME(registerVO.getMEM_NAME());
-    registerVO.setMEM_PASSWORD(registerVO.getMEM_PASSWORD());
-    registerVO.setEMAIL(registerVO.getEMAIL());
-    registerVO.setPHONE_NUM(registerVO.getPHONE_NUM());
-    registerVO.setBIRTHDAY(registerVO.getBIRTHDAY());
-    registerVO.setINFO_OFFER(registerVO.getINFO_OFFER());
-    logger.info("set 후  registerVO : " + registerVO);
-    logger.info("set 후  registerVO.getMEM_ID : " + registerVO.getMEM_ID());
+    logger.info("받은 registerVO : " + registerDTO);
 
-    return registerVO.getMEM_ID();
+    memberRepository.register(registerDTO);
+
+    if (registerDTO.getERR_CD() != 1) {
+      return null;
+    }
+
+    return registerDTO.getMEM_ID();
   }
 
-  // TODO 5번: 로그인 처리 메서드 추가
   /**
    * 로그인
    * 
@@ -63,16 +53,13 @@ public class MemberService {
    */
   public LoginMemberDTO login(AuthCheckDTO authCheckVO) {
     logger.info("MemberService.login() 시작");
-    // logger.info("login()에서 받은 registerVO.getMEM_ID : " + registerVO.getMEM_ID());
 
+    // 유효성 검사
     if (authCheckVO.getMEM_ID().equals("") || authCheckVO.getMEM_PASSWORD().equals("")) {
       logger.info("MemberService.login return 값 : null");
       return null;
     }
 
-    LoginMemberDTO result = memberRepository.checkAuth(authCheckVO);
-
-//    logger.info("MemberService.login return하는 authCheck.getMEM_ID() : " + authCheckVO.getMEM_ID());
-    return result;
+    return memberRepository.checkAuth(authCheckVO);
   }
 }
