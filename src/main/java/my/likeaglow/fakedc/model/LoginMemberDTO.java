@@ -15,5 +15,7 @@ public class LoginMemberDTO {
 
   private String MEM_ID;
   private String MEM_NAME;
+  private int ERR_CD;
+  private String ERR_MSG;
 
 }

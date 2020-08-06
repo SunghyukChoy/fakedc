@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,22 +83,22 @@ button.confirm {
 }
 </style>
 </head>
-<body>
-
-  <!--
-        // TODO 2번 
-        1. form 태그 생성, 요청은 MemberController.loginProcess 메서드를 실행할 수 있도록 action, method 지정
-        2. 내부에 input 2개, submit 타입 버튼 만들고 다음 조건을 만족해야 함
-            - 로그인 ID : input 태그, text 타입
-            - 비밀번호 : input 태그, password 타입
-            - 로그인 버튼 : submit 타입
-        3. 전송했을 때 loginProcess에서 처리할 수 있도록 올바른 값을 넘겨야 함
-        4. 디자인은 크게 상관없음
-     -->
+<body>  
 
   <div class="container">
 
-    <h1>${ member.MEM_NAME } 님 환영합니다.</h1>
+    <h1>${ vo.MEM_ID }의 회원정보.</h1>
+    <span>회원 아이디 : </span><span>${ vo.MEM_ID }</span><br/>
+    <span>회원 이름 : </span><span>${ vo.MEM_NAME }</span><br/>
+    <span>회원 이메일 : </span><span>${ vo.EMAIL }</span><br/>
+    <span>회원 연락처 : </span><span>${ vo.PHONE_NUM }</span><br/>
+    <span>회원 생일 : </span><span>${ vo.BIRTHDAY }</span><br/>
+    <span>최근 방문일 : </span><span>${ vo.RECENT_VISIT }</span><br/>
+    <span>정보 제공 동의 여부 : </span><span>${ vo.INFO_OFFER }</span><br/>
+    <span>회원 가입일 : </span><span>${ vo.CREATE_TIME }</span><br/>
+    <span>회원 정보 수정일 : </span><span>${ vo.UPDATE_TIME }</span><br/>
+    
+    
 
   </div>
 

@@ -53,7 +53,8 @@ public class HomeController {
   @GetMapping(value = "/test")
   public String test() {
     List<MemberVO> members = memberRepository.findAll();
-
+    // Service를 거치지 않고 바로 Repository에 접근. 모든 열을 가져옴.
+    // 열 하나는 MemberVO 객체 하나. MemberVO 객체들을 담을 list 선언
     for (MemberVO memberVO : members) {
       logger.info("result : " + memberVO);
     }

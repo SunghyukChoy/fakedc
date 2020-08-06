@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="my.likeaglow.fakedc.repository.MemberRepository">
+
+  <!-- 모든 회원 불러오기 -->
   <select id="findAll" resultType="my.likeaglow.fakedc.model.MemberVO">
     SELECT * FROM member
   </select>
   
+  <!-- 로그인 -->
   <select id="checkAuth" 
     parameterType="my.likeaglow.fakedc.model.AuthCheckDTO" 
     resultType="my.likeaglow.fakedc.model.LoginMemberDTO"
@@ -14,9 +17,18 @@
     <!--  ERR_CO, ERR_MSG의 결과는 parameterType에 담긴다. -->
   </select>
   
+  <!-- 회원가입 -->
   <select id="register" 
     parameterType="my.likeaglow.fakedc.model.RegisterDTO"
     statementType="CALLABLE">
     { call MEM_in_Register (#{MEM_ID}, #{MEM_NAME}, #{MEM_PASSWORD}, #{EMAIL}, #{PHONE_NUM}, #{BIRTHDAY}, #{INFO_OFFER}, #{ERR_CD, mode=OUT, jdbcType=INTEGER}, #{ERR_MSG, mode=OUT, jdbcType=VARCHAR}) }
+  </select>
+  
+  <!-- 회원정보 조회 -->
+  <select id="myInfo"
+  parameterType="my.likeaglow.fakedc.model.LoginMemberDTO"
+  resultType="my.likeaglow.fakedc.model.MemberVO"
+  statementType="CALLABLE">
+  { call MEM_sr_MyInfo (#{MEM_ID}, #{MEM_NAME}, #{ERR_CD, mode=OUT, jdbcType=INTEGER}, #{ERR_MSG, mode=OUT, jdbcType=VARCHAR}) }
   </select>
 </mapper>
