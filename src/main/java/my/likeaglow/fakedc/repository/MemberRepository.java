@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import my.likeaglow.fakedc.model.AuthCheckDTO;
+import my.likeaglow.fakedc.model.LeaveDTO;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
 import my.likeaglow.fakedc.model.MemberVO;
 import my.likeaglow.fakedc.model.RegisterDTO;
@@ -25,5 +26,7 @@ public interface MemberRepository {
   public MemberVO myInfo(String memberId);
 
   public MemberVO updateInfo(UpdateMemberDTO updateMemberDTO);
+
+  public void leave(LeaveDTO leaveDTO);
 
 }

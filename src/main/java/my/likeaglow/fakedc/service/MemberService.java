@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import my.likeaglow.fakedc.model.AuthCheckDTO;
+import my.likeaglow.fakedc.model.LeaveDTO;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
 import my.likeaglow.fakedc.model.MemberVO;
 import my.likeaglow.fakedc.model.RegisterDTO;
@@ -101,6 +102,12 @@ public class MemberService {
     return memberInfo;
   }
 
+  /**
+   * 회원 정보 수정하기
+   * 
+   * @param updateMemberDTO
+   * @return
+   */
   public MemberVO updateInfo(UpdateMemberDTO updateMemberDTO) {
 
     logger.info("memberService.updateInfo() 시작");
@@ -123,5 +130,19 @@ public class MemberService {
     logger.info("memberService - 업데이트된 memberVO : " + updatedVO);
 
     return updatedVO;
+  }
+
+  /**
+   * 회원 탈퇴
+   * 
+   * @param leaveDTO
+   */
+  public void leave(LeaveDTO leaveDTO) {
+
+    logger.info("매퍼 실행 전 leaveDTO getERR_CD() : " + leaveDTO.getERR_CD());
+
+    memberRepository.leave(leaveDTO);
+
+    logger.info("매퍼 실행 후 leaveDTO getERR_CD() : " + leaveDTO.getERR_CD());
   }
 }

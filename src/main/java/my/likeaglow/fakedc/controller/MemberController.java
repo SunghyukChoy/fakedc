@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import my.likeaglow.fakedc.model.AuthCheckDTO;
+import my.likeaglow.fakedc.model.LeaveDTO;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
 import my.likeaglow.fakedc.model.MemberVO;
 import my.likeaglow.fakedc.model.RegisterDTO;
@@ -111,7 +112,7 @@ public class MemberController {
     AuthCheckDTO authCheckVO = new AuthCheckDTO();
 
     authCheckVO.setMEM_ID("LIKEAGLOW");
-    authCheckVO.setMEM_PASSWORD("1234");
+    authCheckVO.setMEM_PASSWORD("1111");
 
     mv.addObject("vo", authCheckVO);
   }
@@ -255,5 +256,42 @@ public class MemberController {
     mv.addObject("vo", updatedVO);
 
     return mv;
+  }
+
+  /**
+   * 회원 탈퇴
+   * 
+   * @param session
+   * @return
+   */
+  @GetMapping("/leave")
+  public ModelAndView leave(HttpSession session) {
+    logger.info("MemberController.leave() 시작 ");
+
+    LoginMemberDTO loginMemberDTO = (LoginMemberDTO) session.getAttribute("member");
+    logger.info("탈퇴하려는 회원 : " + loginMemberDTO);
+    ModelAndView mv = new ModelAndView("member/leave");
+    mv.addObject("vo", loginMemberDTO);
+
+    return mv;
+  }
+
+  /**
+   * 회원탈퇴 프로세스
+   * 
+   * @param leaveDTO
+   * @param session
+   * @return
+   */
+  @PostMapping("/leave")
+  public String leaveProcess(LeaveDTO leaveDTO, HttpSession session) {
+
+    logger.info("받은 leaveDTO : " + leaveDTO);
+
+    memberService.leave(leaveDTO);
+
+    session.invalidate();
+
+    return "redirect:/";
   }
 }

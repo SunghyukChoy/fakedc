@@ -18,6 +18,7 @@
     <c:otherwise>
       <h1>환영 메시지를 보고 싶으면 로그인을 하라우</h1>
       <a href="member/login">로그인</a>
+      <a href="member/register">회원가입</a>
     </c:otherwise>
   </c:choose>
 

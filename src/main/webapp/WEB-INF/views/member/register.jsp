@@ -127,9 +127,9 @@
         <div class="form-radio-group">
           <label for="rdo-offer-agree">동의</label>
           <!-- for : 텍스트 부분을 클릭했을 때에도 input 박스에 입력할 수 있게 만들어 주는 속성. 속성값은 input 태그의 id 속성값과 같아야 함. -->
-          <input type="radio" id="rdo-offer-agree" name="INFO_OFFER" value="agree" ${ (vo.INFO_OFFER == "Y" ? "checked" : "") } />
+          <input type="radio" id="rdo-offer-agree" name="INFO_OFFER" value="Y" ${ (vo.INFO_OFFER == "Y" ? "checked" : "") } />
           <label for="rdo-offer-disagree">동의하지않음</label>
-          <input type="radio" id="rdo-offer-disagree" name="INFO_OFFER" value="disagree" ${ (vo.INFO_OFFER == "N" ? "checked" : "") } />
+          <input type="radio" id="rdo-offer-disagree" name="INFO_OFFER" value="N" ${ (vo.INFO_OFFER == "N" ? "checked" : "") } />
           <label>
           <!-- for와 id 속성을 추가하지 않아도 작동 가능. 표준은 아님. -->
                           테스트 <input type="radio" name="INFO_OFFER" value="test" ${ (vo.INFO_OFFER == "test" ? "checked" : "") }/>
