@@ -8,6 +8,7 @@ import my.likeaglow.fakedc.model.AuthCheckDTO;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
 import my.likeaglow.fakedc.model.MemberVO;
 import my.likeaglow.fakedc.model.RegisterDTO;
+import my.likeaglow.fakedc.model.UpdateMemberDTO;
 
 @Repository
 public interface MemberRepository {
@@ -23,6 +24,6 @@ public interface MemberRepository {
 
   public MemberVO myInfo(String memberId);
 
-  public MemberVO updateInfo(MemberVO memberVO);
+  public MemberVO updateInfo(UpdateMemberDTO updateMemberDTO);
 
 }

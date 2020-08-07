@@ -11,6 +11,7 @@ import my.likeaglow.fakedc.model.AuthCheckDTO;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
 import my.likeaglow.fakedc.model.MemberVO;
 import my.likeaglow.fakedc.model.RegisterDTO;
+import my.likeaglow.fakedc.model.UpdateMemberDTO;
 import my.likeaglow.fakedc.repository.MemberRepository;
 
 @Service
@@ -100,26 +101,26 @@ public class MemberService {
     return memberInfo;
   }
 
-  public MemberVO updateInfo(MemberVO memberVO) {
+  public MemberVO updateInfo(UpdateMemberDTO updateMemberDTO) {
 
     logger.info("memberService.updateInfo() 시작");
+    logger.info("받은 updateMemberDTO : " + updateMemberDTO);
 
-    if (memberVO.getMEM_ID().equals("") || memberVO.getMEM_NAME().equals("") || memberVO.getMEM_PASSWORD().equals("")
-        || memberVO.getEMAIL().equals("") || memberVO.getBIRTHDAY().equals("") || memberVO.getPHONE_NUM().equals("")
-        || memberVO.getINFO_OFFER().equals("")) {
+    if (updateMemberDTO.getMEM_ID().equals("") || updateMemberDTO.getMEM_NAME().equals("")
+        || updateMemberDTO.getMEM_PASSWORD().equals("") || updateMemberDTO.getEMAIL().equals("")
+        || updateMemberDTO.getBIRTHDAY().equals("") || updateMemberDTO.getPHONE_NUM().equals("")
+        || updateMemberDTO.getINFO_OFFER().equals("")) {
       logger.info("MemberService.updateInfo return 값 : null");
       return null;
     }
 
-    logger.info("받은 memberVO : " + memberVO);
-
-    MemberVO updatedVO = memberRepository.updateInfo(memberVO);
+    MemberVO updatedVO = memberRepository.updateInfo(updateMemberDTO);
+    logger.info("updateMemberDTO.getERR_CD() : " + updateMemberDTO.getERR_CD());
+    if (updateMemberDTO.getERR_CD() != 1) {
+      return null;
+    }
 
     logger.info("memberService - 업데이트된 memberVO : " + updatedVO);
-
-    /*
-     * if (updatedVO.getERR_CD() != 1) { return null; }
-     */
 
     return updatedVO;
   }

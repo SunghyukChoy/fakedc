@@ -15,6 +15,7 @@ import my.likeaglow.fakedc.model.AuthCheckDTO;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
 import my.likeaglow.fakedc.model.MemberVO;
 import my.likeaglow.fakedc.model.RegisterDTO;
+import my.likeaglow.fakedc.model.UpdateMemberDTO;
 import my.likeaglow.fakedc.service.MemberService;
 
 @Controller
@@ -229,41 +230,30 @@ public class MemberController {
    * @return
    */
   @PostMapping("/updateInfo")
-  public ModelAndView updateInfoProcess(MemberVO memberVO) {
+  public ModelAndView updateInfoProcess(UpdateMemberDTO updateMemberDTO) {
     logger.info("MemberController.updateInfoProcess() 시작");
 
-    logger.info("회원이 입력한 수정된 정보 : " + memberVO);
+    logger.info("회원이 입력한 수정된 정보 : " + updateMemberDTO);
 
-    MemberVO updatedVO = memberService.updateInfo(memberVO);
+    MemberVO updatedVO = memberService.updateInfo(updateMemberDTO);
 
     logger.info("memberController - 업데이트된 memberVO : " + updatedVO);
 
     ModelAndView mv = new ModelAndView("member/myinfo");
 
     if (updatedVO == null) {
-      logger.info("updatedVO == null return redirect:/member/error)");
-      return new ModelAndView("redirect:/member/error");
+//      logger.info("updatedVO == null return redirect:/error)");
+//      return new ModelAndView("redirect:/error");
       // new ModelAndView("redirect:URL 매핑명")
 
-//      ModelAndView mv2 = new ModelAndView("member/myinfo");
-//      mv2.addObject("vo", memberVO);
-
+      logger.info("다시 입력하라우");
+      mv.setViewName("member/updateinfo");
+      mv.addObject("vo", updateMemberDTO);
+      return mv;
     }
 
     mv.addObject("vo", updatedVO);
 
-    return mv;
-  }
-
-  /**
-   * 에러 페이지
-   * 
-   * @return
-   */
-  @GetMapping("/error")
-  public ModelAndView re() {
-    ModelAndView mv = new ModelAndView("member/errorpage");
-    // new ModelAndView("jsp 파일 경로")
     return mv;
   }
 }

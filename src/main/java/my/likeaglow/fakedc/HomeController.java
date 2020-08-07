@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import my.likeaglow.fakedc.model.AuthCheckDTO;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
@@ -49,6 +50,18 @@ public class HomeController {
     model.addAttribute("member", session.getAttribute("member"));
 
     return "home";
+  }
+
+  /**
+   * 에러 페이지
+   * 
+   * @return
+   */
+  @GetMapping("/error")
+  public ModelAndView error() {
+    ModelAndView mv = new ModelAndView("member/errorpage");
+    // new ModelAndView("jsp 파일 경로")
+    return mv;
   }
 
   @GetMapping(value = "/test")

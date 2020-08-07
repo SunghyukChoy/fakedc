@@ -34,7 +34,7 @@
   <!-- 여기서 parameterType="java.lang.String"인 경우 parametrType 속성을 생략 가능함. -->
   
    <select id="updateInfo"
-  parameterType="my.likeaglow.fakedc.model.MemberVO"
+  parameterType="my.likeaglow.fakedc.model.UpdateMemberDTO"
   resultType="my.likeaglow.fakedc.model.MemberVO"
   statementType="CALLABLE">
   { call MEM_un_updateInfo (#{MEM_ID}, #{MEM_NAME}, #{MEM_PASSWORD}, #{EMAIL}, #{PHONE_NUM}, #{BIRTHDAY}, #{INFO_OFFER}, #{ERR_CD, mode=OUT, jdbcType=INTEGER}, #{ERR_MSG, mode=OUT, jdbcType=VARCHAR} )}

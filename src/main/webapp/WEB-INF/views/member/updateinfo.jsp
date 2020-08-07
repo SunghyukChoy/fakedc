@@ -123,11 +123,7 @@
         <label>생일</label>
         <input type="date" name="BIRTHDAY" value="${ vo.BIRTHDAY }" />
       </div>
-      <div class="form-control" style="display:none">
-        <label>최근 방문일</label>
-        <%-- <input type="datetime" name="RECENT_VISIT" value="${ JspViewHelper.parseString(vo.RECENT_VISIT) }" /> --%>
-        <input type="text" name="RECENT_VISIT" value="${ JspViewHelper.parseString(vo.RECENT_VISIT) }" />
-      </div>
+      
       <div class="form-control">
         <label>정보제공동의</label>
         <div class="form-radio-group">
@@ -137,23 +133,8 @@
           <label for="rdo-offer-disagree">동의하지않음</label>
           <input type="radio" id="rdo-offer-disagree" name="INFO_OFFER" value="N" ${ (vo.INFO_OFFER == "N" ? "checked" : "") } />          
         </div>
-        <div class="form-control" style="display:none">
-        <label>가입 회원</label>
-        <input type="hidden" name="CREATE_USER" value="${ vo.CREATE_USER }" /><br/>
       </div>
-      <div class="form-control" style="display:none">
-        <label>회원 가입일</label>
-        <input type="text" name="CREATE_TIME" value="${ JspViewHelper.parseString(vo.CREATE_TIME) }" /><br/>
-      </div>
-      <div class="form-control" style="display:none">
-        <label>정보 수정 회원</label>
-        <input type="hidden" name="UPDATE_USER" value="${ vo.UPDATE_USER }" /><br/>
-      </div>
-      <div class="form-control" style="display:none">
-        <label>회원 정보 수정일</label>
-        <input type="text" name="UPDATE_TIME" value="${ JspViewHelper.parseString(vo.UPDATE_TIME) }" /><br/>
-      </div>
-      </div>
+      
       <div class="form-button-group">
         <button type="submit" class="confirm">정보 수정 완료</button>
         <button type="reset" class="danger">정보 다시쓰기</button>
