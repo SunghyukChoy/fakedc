@@ -49,7 +49,7 @@ public class MemberController {
     registerVO.setEMAIL("likeaglow@google.com");
     registerVO.setPHONE_NUM("010-1111-1111");
     registerVO.setBIRTHDAY("1988-02-04");
-    registerVO.setINFO_OFFER("agree");
+    registerVO.setINFO_OFFER("Y");
     // RegisterVO 객체의 필드들에 값을 설정
 
     mv.addObject("vo", registerVO);
@@ -169,7 +169,7 @@ public class MemberController {
    * @param session
    * @return
    */
-  @GetMapping("/myinfo")
+  @GetMapping(value = { "/myinfo", "/myInfo" })
   public ModelAndView myinfo(HttpSession session) {
 
     LoginMemberDTO loginMember = (LoginMemberDTO) session.getAttribute("member");
@@ -186,11 +186,84 @@ public class MemberController {
     ModelAndView mv = new ModelAndView();
     mv.setViewName("member/myinfo");
 
-    MemberVO memberInfo = memberService.myInfo(loginMember);
+    MemberVO memberInfo = memberService.myInfo(loginMember.getMEM_ID());
 
     logger.info("로그인한 회원의 정보 : " + memberInfo);
     mv.addObject("vo", memberInfo);
 
+    return mv;
+  }
+
+  /**
+   * 회원정보 수정
+   * 
+   * @param session
+   * @return
+   */
+  @GetMapping("/updateInfo")
+  public ModelAndView updateInfo(HttpSession session) {
+
+    logger.info("MemberController.updateInfo() 시작");
+
+    LoginMemberDTO loginMember = (LoginMemberDTO) session.getAttribute("member");
+
+    if (loginMember == null) {
+      return new ModelAndView("redirect:/member/login");
+    }
+
+    ModelAndView mv = new ModelAndView();
+    mv.setViewName("member/updateinfo");
+
+    MemberVO memberInfo = memberService.myInfo(loginMember.getMEM_ID());
+
+    logger.info("정보를 수정하려는 회원의 정보 : " + memberInfo);
+    mv.addObject("vo", memberInfo);
+
+    return mv;
+  }
+
+  /**
+   * 회원정보 수정 프로세스
+   * 
+   * @param memberVO
+   * @return
+   */
+  @PostMapping("/updateInfo")
+  public ModelAndView updateInfoProcess(MemberVO memberVO) {
+    logger.info("MemberController.updateInfoProcess() 시작");
+
+    logger.info("회원이 입력한 수정된 정보 : " + memberVO);
+
+    MemberVO updatedVO = memberService.updateInfo(memberVO);
+
+    logger.info("memberController - 업데이트된 memberVO : " + updatedVO);
+
+    ModelAndView mv = new ModelAndView("member/myinfo");
+
+    if (updatedVO == null) {
+      logger.info("updatedVO == null return redirect:/member/error)");
+      return new ModelAndView("redirect:/member/error");
+      // new ModelAndView("redirect:URL 매핑명")
+
+//      ModelAndView mv2 = new ModelAndView("member/myinfo");
+//      mv2.addObject("vo", memberVO);
+
+    }
+
+    mv.addObject("vo", updatedVO);
+
+    return mv;
+  }
+
+  /**
+   * 에러 페이지
+   * 
+   * @return
+   */
+  @GetMapping("/error")
+  public ModelAndView re() {
+    ModelAndView mv = new ModelAndView("member/errorpage");
+    // new ModelAndView("jsp 파일 경로")
     return mv;
   }
 }

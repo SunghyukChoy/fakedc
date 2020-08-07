@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
-<%@ page import="java.util.Date" %>
-<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="my.likeaglow.fakedc.utils.JspViewHelper"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -85,6 +87,7 @@ button.confirm {
 </head>
 <body>  
 
+
   <div class="container">
 
     <h1>${ vo.MEM_ID }의 회원정보.</h1>
@@ -93,14 +96,19 @@ button.confirm {
     <span>회원 이메일 : </span><span>${ vo.EMAIL }</span><br/>
     <span>회원 연락처 : </span><span>${ vo.PHONE_NUM }</span><br/>
     <span>회원 생일 : </span><span>${ vo.BIRTHDAY }</span><br/>
-    <span>최근 방문일 : </span><span>${ vo.RECENT_VISIT }</span><br/>
-    <span>정보 제공 동의 여부 : </span><span>${ vo.INFO_OFFER }</span><br/>
-    <span>회원 가입일 : </span><span>${ vo.CREATE_TIME }</span><br/>
-    <span>회원 정보 수정일 : </span><span>${ vo.UPDATE_TIME }</span><br/>
+    <span>최근 방문일 : </span><span>${ JspViewHelper.parseString(vo.RECENT_VISIT) }</span><br/>    
+    <span>정보 제공 동의 여부 : </span><span>${ (vo.INFO_OFFER == "Y" ? "동의" : "동의하지 않음") }</span><br/>
+    <span>가입 회원 : </span><span>${ vo.CREATE_USER }</span><br/>
+    <span>회원 가입일 : </span><span>${ JspViewHelper.parseString(vo.CREATE_TIME) }</span><br/>
+    <span>정보 수정 회원 : </span><span>${ vo.UPDATE_USER }</span><br/>        
+    <span>회원 정보 수정일 : </span><span>${ JspViewHelper.parseString(vo.UPDATE_TIME) }</span><br/>
     
     
-
   </div>
+  
+  <a href="..">메인페이지</a>
+  <a href="updateInfo">회원정보 수정하기</a>
+  <!-- 같은 레벨의 페이지이므로 "member/"는 기재하지 않음 -->
 
 </body>
 </html>

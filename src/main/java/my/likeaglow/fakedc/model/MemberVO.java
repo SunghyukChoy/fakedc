@@ -19,10 +19,11 @@ public class MemberVO {
   private String BIRTHDAY;
   private LocalDateTime RECENT_VISIT;
   private String INFO_OFFER;
-  private String DBSTATUS;
   private String CREATE_USER;
   private LocalDateTime CREATE_TIME;
   private String UPDATE_USER;
   private LocalDateTime UPDATE_TIME;
+  private int ERR_CD;
+  private String ERR_MSG;
 
 }

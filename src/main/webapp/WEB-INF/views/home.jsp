@@ -11,6 +11,8 @@
   <c:choose>
     <c:when test="${ member != null }">
       <h1>${ member.MEM_NAME }님 환영합니다.</h1>
+      <a href="member/myInfo">회원정보 보기</a>
+      <!-- href="메소드 매핑명" -->
       <a href="member/logout">로그아웃</a>
     </c:when>
     <c:otherwise>

@@ -92,11 +92,35 @@ public class MemberService {
    * @param loginMember
    * @return
    */
-  public MemberVO myInfo(LoginMemberDTO loginMember) {
+  public MemberVO myInfo(String memberId) {
     logger.info("memberService.myInfo() 시작");
 
-    MemberVO memberInfo = (MemberVO) memberRepository.myInfo(loginMember);
+    MemberVO memberInfo = (MemberVO) memberRepository.myInfo(memberId);
 
     return memberInfo;
+  }
+
+  public MemberVO updateInfo(MemberVO memberVO) {
+
+    logger.info("memberService.updateInfo() 시작");
+
+    if (memberVO.getMEM_ID().equals("") || memberVO.getMEM_NAME().equals("") || memberVO.getMEM_PASSWORD().equals("")
+        || memberVO.getEMAIL().equals("") || memberVO.getBIRTHDAY().equals("") || memberVO.getPHONE_NUM().equals("")
+        || memberVO.getINFO_OFFER().equals("")) {
+      logger.info("MemberService.updateInfo return 값 : null");
+      return null;
+    }
+
+    logger.info("받은 memberVO : " + memberVO);
+
+    MemberVO updatedVO = memberRepository.updateInfo(memberVO);
+
+    logger.info("memberService - 업데이트된 memberVO : " + updatedVO);
+
+    /*
+     * if (updatedVO.getERR_CD() != 1) { return null; }
+     */
+
+    return updatedVO;
   }
 }

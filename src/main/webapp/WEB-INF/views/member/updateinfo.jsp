@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>회원가입</title>
+<title>회원정보 수정하기</title>
 
 <style>
   html {
@@ -89,12 +89,13 @@
     <!--  데이터를 읽어오는 작업은 get, 그 외의 나머지는 post -->
     <!--  action 태그의 속성값은 미입력 시 호출 당시의 URL(컨트롤러의 메소드)로 보냄 -->
     <!--  method="post" : post 메소드로 보냄 . get 방식은 브라우저의 URL에 ?속성=값 형태로 보냄-->
-    <form class="form-register" method="post">
-      <h1>DCINSIDE 회원가입</h1>
+    <form class="form-register" method="post" action="updateInfo">
+      <h1>DCINSIDE 회원정보 수정</h1>
       <hr style="margin: 20px 0px; border: 1px solid #eee;" />
       <div class="form-control">
         <label>회원 아이디</label>
-        <input type="text" name="MEM_ID" value="${ vo.MEM_ID }" />
+        <input type="hidden" name="MEM_ID" value="${ vo.MEM_ID }" />
+        <span>${ vo.MEM_ID }</span><br/>
         <!-- name의 속성값은 VO 객체의 필드명과 맞춰줌. 이 값이 필드의 값으로 들어감 -->
         <!-- value : 입력하지 않아도 있는 기본값.  -->
       </div>
@@ -117,27 +118,44 @@
       <div class="form-control">
         <label>휴대폰 번호</label>
         <input type="text" name="PHONE_NUM" value="${ vo.PHONE_NUM }" />
-      </div>
+      </div>      
       <div class="form-control">
         <label>생일</label>
         <input type="date" name="BIRTHDAY" value="${ vo.BIRTHDAY }" />
+      </div>
+      <div class="form-control" style="display:none">
+        <label>최근 방문일</label>
+        <%-- <input type="datetime" name="RECENT_VISIT" value="${ JspViewHelper.parseString(vo.RECENT_VISIT) }" /> --%>
+        <input type="text" name="RECENT_VISIT" value="${ JspViewHelper.parseString(vo.RECENT_VISIT) }" />
       </div>
       <div class="form-control">
         <label>정보제공동의</label>
         <div class="form-radio-group">
           <label for="rdo-offer-agree">동의</label>
           <!-- for : 텍스트 부분을 클릭했을 때에도 input 박스에 입력할 수 있게 만들어 주는 속성. 속성값은 input 태그의 id 속성값과 같아야 함. -->
-          <input type="radio" id="rdo-offer-agree" name="INFO_OFFER" value="agree" ${ (vo.INFO_OFFER == "Y" ? "checked" : "") } />
+          <input type="radio" id="rdo-offer-agree" name="INFO_OFFER" value="Y" ${ (vo.INFO_OFFER == "Y" ? "checked" : "") } />          
           <label for="rdo-offer-disagree">동의하지않음</label>
-          <input type="radio" id="rdo-offer-disagree" name="INFO_OFFER" value="disagree" ${ (vo.INFO_OFFER == "N" ? "checked" : "") } />
-          <label>
-          <!-- for와 id 속성을 추가하지 않아도 작동 가능. 표준은 아님. -->
-                          테스트 <input type="radio" name="INFO_OFFER" value="test" ${ (vo.INFO_OFFER == "test" ? "checked" : "") }/>
-          </label>
+          <input type="radio" id="rdo-offer-disagree" name="INFO_OFFER" value="N" ${ (vo.INFO_OFFER == "N" ? "checked" : "") } />          
         </div>
+        <div class="form-control" style="display:none">
+        <label>가입 회원</label>
+        <input type="hidden" name="CREATE_USER" value="${ vo.CREATE_USER }" /><br/>
+      </div>
+      <div class="form-control" style="display:none">
+        <label>회원 가입일</label>
+        <input type="text" name="CREATE_TIME" value="${ JspViewHelper.parseString(vo.CREATE_TIME) }" /><br/>
+      </div>
+      <div class="form-control" style="display:none">
+        <label>정보 수정 회원</label>
+        <input type="hidden" name="UPDATE_USER" value="${ vo.UPDATE_USER }" /><br/>
+      </div>
+      <div class="form-control" style="display:none">
+        <label>회원 정보 수정일</label>
+        <input type="text" name="UPDATE_TIME" value="${ JspViewHelper.parseString(vo.UPDATE_TIME) }" /><br/>
+      </div>
       </div>
       <div class="form-button-group">
-        <button type="submit" class="confirm">가입하기</button>
+        <button type="submit" class="confirm">정보 수정 완료</button>
         <button type="reset" class="danger">정보 다시쓰기</button>
       </div>
     </form>

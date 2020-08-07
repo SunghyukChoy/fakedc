@@ -26,9 +26,17 @@
   
   <!-- 회원정보 조회 -->
   <select id="myInfo"
-  parameterType="my.likeaglow.fakedc.model.LoginMemberDTO"
+  parameterType="java.lang.String"
   resultType="my.likeaglow.fakedc.model.MemberVO"
   statementType="CALLABLE">
-  { call MEM_sr_MyInfo (#{MEM_ID}, #{MEM_NAME}, #{ERR_CD, mode=OUT, jdbcType=INTEGER}, #{ERR_MSG, mode=OUT, jdbcType=VARCHAR}) }
+  { call MEM_sr_MyInfo (#{memberId}) }
+  </select>
+  <!-- 여기서 parameterType="java.lang.String"인 경우 parametrType 속성을 생략 가능함. -->
+  
+   <select id="updateInfo"
+  parameterType="my.likeaglow.fakedc.model.MemberVO"
+  resultType="my.likeaglow.fakedc.model.MemberVO"
+  statementType="CALLABLE">
+  { call MEM_un_updateInfo (#{MEM_ID}, #{MEM_NAME}, #{MEM_PASSWORD}, #{EMAIL}, #{PHONE_NUM}, #{BIRTHDAY}, #{INFO_OFFER}, #{ERR_CD, mode=OUT, jdbcType=INTEGER}, #{ERR_MSG, mode=OUT, jdbcType=VARCHAR} )}
   </select>
 </mapper>

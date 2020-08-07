@@ -21,6 +21,8 @@ public interface MemberRepository {
 
   public void register(RegisterDTO registerDTO);
 
-  public MemberVO myInfo(LoginMemberDTO loginMemberDTO);
+  public MemberVO myInfo(String memberId);
+
+  public MemberVO updateInfo(MemberVO memberVO);
 
 }

@@ -1,6 +1,7 @@
 package my.likeaglow.fakedc;
 
 import java.text.DateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -86,6 +87,28 @@ public class HomeController {
 //    }
 
     return "home";
+  }
+
+  // 날짜 객체 생성
+  public static final Date INSANE_DATE = new Date(2020, 8, 11);
+  public static final LocalDateTime INSANE_DATE2 = LocalDateTime.of(2020, 8, 20, 0, 0, 0);
+
+  @GetMapping(value = "/test3")
+  public void test3() {
+
+    INSANE_DATE.setYear(2022);
+    // static final로 선언하였지만 값이 바뀜.
+
+    logger.info(INSANE_DATE.toLocaleString());
+  }
+
+  @GetMapping(value = "/test4")
+  public void test4() {
+//    INSANE_DATE2.set
+    // set 메소드가 없음. 이렇게 외부에서 값을 설정할 수 없는 객체가 불변객체.
+    // 불변객체는 새로운 값을 저장할 때마다 객체를 새로 생성해야 하므로 메모리 소비가 커짐.
+
+    logger.info(INSANE_DATE2.toString());
   }
 
 }
