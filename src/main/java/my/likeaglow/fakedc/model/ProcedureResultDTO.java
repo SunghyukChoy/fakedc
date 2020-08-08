@@ -14,6 +14,10 @@ public abstract class ProcedureResultDTO {
 	private int ERR_CD = -1;
 	private String ERR_MSG = "";
 	
+	public boolean isSuccessCall() {
+		return isProcedureCallSuccess();
+	}
+	
 	protected boolean isProcedureCallSuccess() {
 		return ERR_CD == SUCCESS_CODE;
 	}

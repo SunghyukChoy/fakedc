@@ -8,6 +8,7 @@
 <body>
   <h1>Hello world!</h1>
 
+<!-- 숙제 #1번 힌트 -->
   <c:choose>
     <c:when test="${ member != null }">
       <h1>${ member.MEM_NAME }님 환영합니다.</h1>

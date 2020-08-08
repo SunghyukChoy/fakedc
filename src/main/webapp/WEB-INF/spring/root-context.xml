@@ -46,5 +46,12 @@
       value="my.likeaglow.fakedc.repository.MemberRepository" />
     <property name="sqlSessionFactory" ref="sqlSessionFactory" />
   </bean>
+  
+  <bean id="postRepository"
+    class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface"
+      value="my.likeaglow.fakedc.repository.PostRepository" />
+    <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+  </bean>
 
 </beans>

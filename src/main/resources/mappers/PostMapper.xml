@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="my.likeaglow.fakedc.repository.PostRepository">
+  
+  <!-- 글쓰기 -->
+  <select id="savePost" 
+    parameterType="my.likeaglow.fakedc.model.PostVO"
+    statementType="CALLABLE">
+    { call PST_in_WritePost (
+     #{BOARD_ID}
+    ,#{POST_TITLE}
+    ,#{POST_CONTENT}
+    ,#{POST_PASSWORD}
+    ,#{POST_TYPE}
+    ,#{CREATE_USER}
+    ,#{POST_ID, mode=OUT, jdbcType=INTEGER}
+    ,#{ERR_CD, mode=OUT, jdbcType=INTEGER}
+    ,#{ERR_MSG, mode=OUT, jdbcType=VARCHAR}) }
+  </select>
+  
+  
+</mapper>
