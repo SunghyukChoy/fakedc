@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import my.likeaglow.fakedc.common.GlobalVariable;
 import my.likeaglow.fakedc.model.AuthCheckDTO;
 import my.likeaglow.fakedc.model.LeaveDTO;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
@@ -31,10 +32,7 @@ public class MemberService {
    */
   public String register(RegisterDTO registerDTO) {
 
-    if (registerDTO.getMEM_ID().equals("") || registerDTO.getMEM_NAME().equals("")
-        || registerDTO.getMEM_PASSWORD().equals("") || registerDTO.getEMAIL().equals("")
-        || registerDTO.getBIRTHDAY().equals("") || registerDTO.getPHONE_NUM().equals("")
-        || registerDTO.getINFO_OFFER().equals("")) {
+    if (registerDTO.isInvalidDTO()) {
       logger.info("MemberService.register return 값 : null");
       return null;
     }
@@ -43,7 +41,7 @@ public class MemberService {
 
     memberRepository.register(registerDTO);
 
-    if (registerDTO.getERR_CD() != 1) {
+    if (!registerDTO.isSuccessRegister()) {
       // 쿼리 수행 결과 ERR_CD, ERR_MSG 값이 registerDTO에 담김
       // 회원가입 실패 시.
       return null;
@@ -76,14 +74,11 @@ public class MemberService {
     // logger.info(authCheckDTO.getMEM_ID());
     // 그리고 쿼리 실행 결과인 ERR_CD, ERR_MSG가 담김
 
-    if (authCheckDTO.getERR_CD() == 1) {
-      // 로그인 성공 로직. 로그인 성공 시 프로시저에서 ERR_CD = 1을 반환
-//      session.setAttribute("MEM_ID", result.getMEM_ID());
-//      session.setAttribute("MEM_NAME", result.getMEM_NAME());
-      session.setAttribute("member", loginMemberDTO);
+    if (authCheckDTO.isLoginSuccess()) {
+      session.setAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY, loginMemberDTO);
       // session에 "member"를 키로, loginMemberDTO를 value로 저장
     }
-
+    
     return loginMemberDTO;
     // LoginMemberDTO 객체를 갖고 메소드를 호출했던 곳(MemberController.loginProcess() 메소드로 돌아감)
   }

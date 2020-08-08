@@ -120,24 +120,24 @@ public class MemberController {
   /**
    * 회원 로그인 프로세스
    * 
-   * @param authCheckVO 로그인 체크 객체
+   * @param authCheckDTO 로그인 체크 객체
    * @return 성공시 개인정보 상세페이지로 이동, 실패시 포스트백
    */
   @PostMapping("/login")
-  public ModelAndView loginProcess(AuthCheckDTO authCheckVO, HttpSession session) {
+  public ModelAndView loginProcess(AuthCheckDTO authCheckDTO, HttpSession session) {
     // TODO 3번 : 아래 로깅을 통해서 AuthCkeckVO의 필드값을 체크하기 위해 AuthCheckVO 에 적절한 어노테이션 삽입, 아래
     // 코드는 수정하지 말 것
-    logger.debug("로그인 객체 로그 : " + authCheckVO);
+    logger.debug("로그인 객체 로그 : " + authCheckDTO);
     // authCheckVO에는 사용자로부터 입력받은 MEM_ID, MEM_PASSWORD가 들어가 있음.
 
-    LoginMemberDTO loginVO = memberService.login(authCheckVO, session);
+    LoginMemberDTO loginVO = memberService.login(authCheckDTO, session);
     // session은 JSP의 내장 객체로 직접 생성하지 않아도 사용할 수 있다.
 
-    if (authCheckVO.getERR_CD() != 1) { // 로그인 실패 시
+    if (!authCheckDTO.isLoginSuccess()) { // 로그인 실패 시
       ModelAndView mv = new ModelAndView("member/login"); // member/login 페이지로 보냄
-      authCheckVO.setMEM_PASSWORD(""); // 입력한 비밀번호 제거
+      authCheckDTO.setMEM_PASSWORD(""); // 입력한 비밀번호 제거
 
-      mv.addObject("vo", authCheckVO);
+      mv.addObject("vo", authCheckDTO);
       // "vo"를 key로 하고("vo"는 기존에 있던 키. view 페이지에서 이 key로 접근하므로 똑같이 맞춰줌.)
       // 비밀번호가 제거된 authCheckVO를 value로 해서 mv에 저장
       return mv;

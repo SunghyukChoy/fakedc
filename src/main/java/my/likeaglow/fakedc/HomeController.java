@@ -79,7 +79,7 @@ public class HomeController {
   @GetMapping(value = "/test2")
   public String test2() {
     // Arrange (할당, 테스트할 값 선언)
-    AuthCheckDTO auth = new AuthCheckDTO("LIKEAGLOW", "1234", -1, null);
+    AuthCheckDTO auth = new AuthCheckDTO("LIKEAGLOW", "1234");
 
     // Action (테스트 하려고 하는 메서드 실행)
     LoginMemberDTO login = memberRepository.checkAuth(auth);

@@ -11,10 +11,13 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthCheckDTO {
+public class AuthCheckDTO extends ProcedureResultDTO {
   // TODO: 로그인 시도에 필요한 정보를 위한 field 생성, getter, setter 지정 with Lombok
   private String MEM_ID;
   private String MEM_PASSWORD;
-  private int ERR_CD;
-  private String ERR_MSG;
+  
+  public boolean isLoginSuccess() {
+	  return isProcedureCallSuccess();
+  }
+  
 }
