@@ -1,10 +1,11 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>글쓰기</title>
 
 <style>
 	* {
@@ -43,16 +44,28 @@
 			</select>
 		</div>
 		<div>
-			<label>제목</label> <input type="text" name="POST_TITLE"
-				value="${ vo.POST_TITLE }" />
+			<label>제목</label>
+      <input type="text" name="POST_TITLE" value="${ vo.POST_TITLE }" />
 		</div>
+		<%-- <div>
+			<label>글쓴이</label>
+      <input type="text" name="CREATE_USER" value="${ vo.CREATE_USER }" />
+		</div> --%>
+    <c:choose>
+    <c:when test="${ vo.CREATE_USER != null }">
+      <label>글쓴이</label>
+      <input type="hidden" name="CREATE_USER" value="${ vo.CREATE_USER }" />
+      <span>${ vo.CREATE_USER }</span>
+    </c:when>
+    <%-- <c:otherwise>
+      <label>글쓴이</label>
+      <input type="text" name="CREATE_USER" value="${ vo.CREATE_USER }" />
+    </c:otherwise> --%>
+  </c:choose>
+    
 		<div>
-			<label>글쓴이</label> <input type="text" name="CREATE_USER"
-				value="${ vo.CREATE_USER }" />
-		</div>
-		<div>
-			<label>비밀번호</label> <input type="password" name="POST_PASSWORD"
-				value="${ vo.POST_PASSWORD }" />
+			<label>비밀번호</label>
+      <input type="password" name="POST_PASSWORD" value="${ vo.POST_PASSWORD }" />
 		</div>
 		<div>
 			<label>내용</label>
@@ -60,7 +73,7 @@
 		</div>
 
 		<button type="submit">제출</button>
-		<button type="button" onclick="history.back(-1)">게시판으로</button><%-- 뒤로 가기 --%>
+		<button type="button" onclick="history.back(-1)">뒤로 가기</button><%-- 뒤로 가기 --%>
     
 	</form>
 </body>

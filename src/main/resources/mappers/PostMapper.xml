@@ -4,7 +4,7 @@
   
   <!-- 글쓰기 -->
   <select id="savePost" 
-    parameterType="my.likeaglow.fakedc.model.PostVO"
+    parameterType="my.likeaglow.fakedc.model.writePostDTO"    
     statementType="CALLABLE">
     { call PST_in_WritePost (
      #{BOARD_ID}

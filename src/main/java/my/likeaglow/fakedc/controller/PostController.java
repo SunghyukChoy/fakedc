@@ -1,5 +1,7 @@
 package my.likeaglow.fakedc.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,62 +12,88 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import my.likeaglow.fakedc.model.PostVO;
+import my.likeaglow.fakedc.common.GlobalVariable;
+import my.likeaglow.fakedc.model.LoginMemberDTO;
+import my.likeaglow.fakedc.model.writePostDTO;
 import my.likeaglow.fakedc.service.PostService;
 
 @Controller
 @RequestMapping("/post")
 public class PostController {
 
-	private static final Logger logger = LoggerFactory.getLogger(PostController.class);
+  private static final Logger logger = LoggerFactory.getLogger(PostController.class);
 
-	@Autowired
-	private PostService postService;
+  @Autowired
+  private PostService postService;
 
-	@GetMapping("/write")
-	public ModelAndView write() {
+  /**
+   * 끌쓰기
+   * 
+   * @return
+   */
+  @GetMapping("/write")
+  public ModelAndView write(HttpSession session) {
 
-		ModelAndView mv = new ModelAndView("post/write");
+    if (session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY) == null) {
+      ModelAndView mv = new ModelAndView("member/request_login");
+      return mv;
+    }
 
-		setTestPost(mv);
-		
-		return mv;
-	}
+    LoginMemberDTO loginMember = (LoginMemberDTO) session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY);
 
-	private void setTestPost(ModelAndView mv) {
-		PostVO postVO = new PostVO();
-		postVO.setBOARD_ID("test");
-		postVO.setPOST_TITLE("테스트 게시글입니다.");
-		postVO.setPOST_PASSWORD("1111");
-		postVO.setPOST_TYPE(1);
-		postVO.setCREATE_USER("likeaglow");
-		postVO.setPOST_CONTENT("게시글 테스트입니다.\n잘부탁드립니다.");
-		
-		mv.addObject("vo", postVO);
-	}
+    ModelAndView mv = new ModelAndView("post/write");
 
-	@PostMapping("/write")
-	public ModelAndView writeProcess(PostVO postVO) {
-		logger.info("parameter: " + postVO);
-		long postId = postService.write(postVO);
+    setTestPost(mv, loginMember);
 
-		ModelAndView mv = new ModelAndView();
-		// failure
-		if (postId < 0) {
+    return mv;
+  }
 
-			mv.setViewName("post/write");
-			mv.addObject("vo", postVO);
-			return mv;
-		}
-		
+  // 글쓰기 기본값 생성 메소드
+  private void setTestPost(ModelAndView mv, LoginMemberDTO loginMember) {
+    writePostDTO writePostDTO = new writePostDTO();
+    writePostDTO.setBOARD_ID("test");
+    writePostDTO.setPOST_TITLE("테스트 게시글입니다.");
+    writePostDTO.setPOST_CONTENT("게시글 테스트입니다.\n잘부탁드립니다.");
+    writePostDTO.setPOST_PASSWORD("1111");
+    writePostDTO.setPOST_TYPE(1);
+    writePostDTO.setCREATE_USER(loginMember.getMEM_ID());
 
-		mv.setViewName("redirect:" + postId);
-		return mv;
-	}
+    mv.addObject("vo", writePostDTO);
+  }
 
-	@GetMapping("/{postId}")
-	public ModelAndView detail(@PathVariable long postId) {
-		return new ModelAndView("post/detail");
-	}
+  /**
+   * 글쓰기 프로세스
+   * 
+   * @param postVO
+   * @return
+   */
+  @PostMapping("/write")
+  public ModelAndView writeProcess(writePostDTO writePostDTO) {
+    logger.info("writePostDTO에 담긴 데이터 : " + writePostDTO);
+    long postId = postService.write(writePostDTO);
+
+    ModelAndView mv = new ModelAndView();
+    // failure
+    if (postId < 0) {
+      logger.info("글쓰기 실패");
+      mv.setViewName("post/write");
+      mv.addObject("vo", writePostDTO);
+      return mv;
+    }
+
+    mv.setViewName("redirect:" + postId);
+    return mv;
+  }
+
+  /**
+   * 글 보기
+   * 
+   * @param postId
+   * @return
+   */
+  @GetMapping("/{postId}")
+  public ModelAndView detail(@PathVariable long postId) {
+    return new ModelAndView("post/detail");
+  }
 
 }

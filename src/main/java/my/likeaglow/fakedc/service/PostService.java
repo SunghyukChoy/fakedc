@@ -2,47 +2,51 @@ package my.likeaglow.fakedc.service;
 
 import java.util.List;
 
-import javax.inject.Named;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import my.likeaglow.fakedc.model.PostVO;
+import my.likeaglow.fakedc.model.writePostDTO;
 import my.likeaglow.fakedc.repository.PostRepository;
 
 @Service
 public class PostService {
-	
-	@Autowired
-	private PostRepository postRepository;
 
-	public List<PostVO> getPosts() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	/**
-	 * 글쓰기
-	 * 등록에 성공하면 POST_ID를 출력
-	 * 게시글을 등록하기 위한 상태가 유효하지 않으면 -1 출력
-	 * 데이터베이스에 등록이 실패하면 -2 출력
-	 * 
-	 * @author sunghyuk choi
-	 * @param postVO 게시글 객체
-	 * @return 게시글 ID값
-	 */
-	public long write(PostVO postVO) {
-		
-		if(postVO.isInvalid()) {
-			return -1;
-		}
-		
-		postRepository.savePost(postVO);
-		
-		if(!postVO.isSuccessCall()) {
-			return -2;
-		}
-		
-		return postVO.getPOST_ID();
-	}
+  private static final Logger logger = LoggerFactory.getLogger(PostService.class);
+
+  @Autowired
+  private PostRepository postRepository;
+
+  public List<PostVO> getPosts() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  /**
+   * 글쓰기 등록에 성공하면 POST_ID를 출력 게시글을 등록하기 위한 상태가 유효하지 않으면 -1 출력 데이터베이스에 등록이 실패하면 -2
+   * 출력
+   * 
+   * @author sunghyuk choi
+   * @param writePostDTO 게시글 객체
+   * @return 게시글 ID값
+   */
+  public long write(writePostDTO writePostDTO) {
+
+    logger.info("PostService.write() 메서드 시작");
+    if (writePostDTO.isInvalid()) {
+      return -1;
+    }
+
+    postRepository.savePost(writePostDTO);
+
+    logger.info("쿼리 실행 후 얻은 POST_ID : " + writePostDTO.getPOST_ID());
+
+    if (!writePostDTO.isSuccessCall()) {
+      return -2;
+    }
+
+    return writePostDTO.getPOST_ID();
+  }
 }

@@ -19,14 +19,19 @@ public interface MemberRepository {
 
   public List<MemberVO> findAll();
 
+  // 로그인
   public LoginMemberDTO checkAuth(AuthCheckDTO authCheckDTO);
 
+  // 회원가입
   public void register(RegisterDTO registerDTO);
 
+  // 회원 정보 보기
   public MemberVO myInfo(String memberId);
 
+  // 회원 정보 수정하기
   public MemberVO updateInfo(UpdateMemberDTO updateMemberDTO);
 
+  // 탈퇴하기
   public void leave(LeaveDTO leaveDTO);
 
 }
