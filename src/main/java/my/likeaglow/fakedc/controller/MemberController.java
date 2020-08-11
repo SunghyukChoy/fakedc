@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import my.likeaglow.fakedc.common.GlobalVariable;
 import my.likeaglow.fakedc.model.AuthCheckDTO;
 import my.likeaglow.fakedc.model.LeaveDTO;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
@@ -24,7 +25,7 @@ import my.likeaglow.fakedc.service.MemberService;
 public class MemberController {
 
   @Autowired
-  MemberService memberService;
+  private MemberService memberService;
 
   private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
   // Console 창에 로그 찍는 객체. getLogger(현재클래스.class)
@@ -43,18 +44,18 @@ public class MemberController {
 
   // 기본값 설정 메소드.
   private void setTestRegister(ModelAndView mv) {
-    RegisterDTO registerVO = new RegisterDTO();
+    RegisterDTO registerDTO = new RegisterDTO();
     // RegisterVO 객체 생성
-    registerVO.setMEM_ID("likeaglow");
-    registerVO.setMEM_NAME("최성혁");
-    registerVO.setMEM_PASSWORD("1111");
-    registerVO.setEMAIL("likeaglow@google.com");
-    registerVO.setPHONE_NUM("010-1111-1111");
-    registerVO.setBIRTHDAY("1988-02-04");
-    registerVO.setINFO_OFFER("Y");
+    registerDTO.setMEM_ID("likeaglow");
+    registerDTO.setMEM_NAME("최성혁");
+    registerDTO.setMEM_PASSWORD("1111");
+    registerDTO.setEMAIL("likeaglow@google.com");
+    registerDTO.setPHONE_NUM("010-1111-1111");
+    registerDTO.setBIRTHDAY("1988-02-04");
+    registerDTO.setINFO_OFFER("Y");
     // RegisterVO 객체의 필드들에 값을 설정
 
-    mv.addObject("vo", registerVO);
+    mv.addObject("vo", registerDTO);
     // addObject(String name, Object value)
     // "vo" : view 페이지에 전달할 값을 담은 key. view 페이지에서 이 key로 데이터 접근.
     // registerVO : view 페이지에 전달할 값을 담은 객체. value
@@ -69,7 +70,8 @@ public class MemberController {
   @PostMapping("/register")
   public ModelAndView registerProcess(RegisterDTO registerDTO) {
     // ModelAndView에서 Model의 의미 : 데이터를 담을 그릇을 의미. Value Object(VO).
-    // RegisterVO는 회원가입 데이터를 담는 객체
+    // RegisterDTO는 회원가입 데이터를 담는 클래스
+    // 폼 태그에서 값을 넘겨주면 컨트롤러의 post 메소드 실행 시 파라미터들의 객체가 생성되고 객체의 필드들에 값이 담김
     String memberId = memberService.register(registerDTO);
     // registerVO를 매개변수로 넘겨 memberService 클래스의 register 메소드 실행
     // 회원가입 성공 시 registerVO.getMEM_ID() 값을 변수 memberId에 저장.
@@ -171,11 +173,11 @@ public class MemberController {
    * @param session
    * @return
    */
-  @GetMapping(value = { "/myinfo", "/myInfo" })
+  @GetMapping(value = { "/myinfo", "/myInfo" }) // 둘 다 허용되게 하는 매핑
   public ModelAndView myinfo(HttpSession session) {
 
-    LoginMemberDTO loginMember = (LoginMemberDTO) session.getAttribute("member");
-    // session에 key를 "member"로 해서 담았던 value를 가져와서 loginMember 변수 생성
+    LoginMemberDTO loginMember = (LoginMemberDTO) session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY);
+    // session에 key로 담았던 value를 가져와서 loginMember 변수 생성
 
     if (loginMember == null) {
       return new ModelAndView("redirect:/member/login");
@@ -207,7 +209,7 @@ public class MemberController {
 
     logger.info("MemberController.updateInfo() 시작");
 
-    LoginMemberDTO loginMember = (LoginMemberDTO) session.getAttribute("member");
+    LoginMemberDTO loginMember = (LoginMemberDTO) session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY);
 
     if (loginMember == null) {
       return new ModelAndView("redirect:/member/login");
@@ -268,7 +270,7 @@ public class MemberController {
   public ModelAndView leave(HttpSession session) {
     logger.info("MemberController.leave() 시작 ");
 
-    LoginMemberDTO loginMemberDTO = (LoginMemberDTO) session.getAttribute("member");
+    LoginMemberDTO loginMemberDTO = (LoginMemberDTO) session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY);
     logger.info("탈퇴하려는 회원 : " + loginMemberDTO);
     ModelAndView mv = new ModelAndView("member/leave");
     mv.addObject("vo", loginMemberDTO);

@@ -39,7 +39,9 @@
   </bean>
 
   <!-- MyBatis Mappers -->
-  <!--  Repository interface의 impl 클래스를 필요없게 만드는 bean. interface에서 mapper로 바로 접근할 수 있게 해준다. -->
+  <!-- Repository interface의 impl 클래스를 필요없게 만드는 bean. interface에서 mapper로 바로 접근할 수 있게 해준다. -->
+  <!-- bean을 등록하는 것은 인터페이스를 구현하는 클래스를 만드는 것과 같음. -->
+  <!--  property name="mapperInterface" value="repository 인터페이스의 경로" -->
   <bean id="memberRepository"
     class="org.mybatis.spring.mapper.MapperFactoryBean">
     <property name="mapperInterface"

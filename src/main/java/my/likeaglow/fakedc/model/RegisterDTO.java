@@ -10,26 +10,29 @@ import lombok.ToString;
 @ToString
 // @ToString : 객체에 담긴 값들을 한 번에 출력하기 위한 어노테이션
 public class RegisterDTO extends ProcedureResultDTO {
-// 회원가입 시 데이터를 담을 객체
-	private String MEM_ID;
-	private String MEM_NAME;
-	private String MEM_PASSWORD;
-	private String EMAIL;
-	private String PHONE_NUM;
-	private String BIRTHDAY;
-	private String INFO_OFFER; // `agree` or `disagree`
+  // 회원가입 시 데이터를 담을 객체
+  // MemberVO를 쓰지 않고 DTO 객체를 따로 만들어 쓰는 이유는 각 클래스를 목적에 맞는 용도로만 쓰기 위해서임.
+  // 같은 필드를 사용한다고 해서 다른 목적으로 만든 클래스를 쓰지 말것.
+  private String MEM_ID;
+  private String MEM_NAME;
+  private String MEM_PASSWORD;
+  private String EMAIL;
+  private String PHONE_NUM;
+  private String BIRTHDAY;
+  private String INFO_OFFER; // 'Y' or 'N'
 
-	/**
-	 * 저장하기 전 유효한 저장 상태인지 점검한다
-	 * @return
-	 */
-	public boolean isInvalidDTO() {
-		return MEM_ID.equals("") || MEM_NAME.equals("") || MEM_PASSWORD.equals("")
-				|| EMAIL.equals("") || BIRTHDAY.equals("") || PHONE_NUM.equals("")
-				|| INFO_OFFER.equals("");
-	}
+  // DTO 객체에 변수들의 값만이 아닌 객체의 상태를 저장한다.
+  /**
+   * 저장하기 전 유효한 저장 상태인지 점검한다
+   * 
+   * @return
+   */
+  public boolean isInvalidDTO() {
+    return MEM_ID.equals("") || MEM_NAME.equals("") || MEM_PASSWORD.equals("") || EMAIL.equals("")
+        || BIRTHDAY.equals("") || PHONE_NUM.equals("") || INFO_OFFER.equals("");
+  }
 
-	public boolean isSuccessRegister() {
-		return isProcedureCallSuccess();
-	}
+  public boolean isRegisterSuccess() {
+    return isProcedureCallSuccess();
+  }
 }

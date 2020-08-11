@@ -100,8 +100,7 @@
       <span>회원 탈퇴하시겠습니까?</span>      
       <div class="form-button-group">
         <button type="submit" class="confirm">탈퇴하기</button>
-        <a href=".."><button type="button" class="danger">메인으로 가기</button></a>
-        <a href="myinfo"><button type="button" class="danger">회원정보로 가기</button></a>
+        <button type="button" onclick="history.back(-1)">뒤로 가기</button>
       </div>
     </form>
   </div>

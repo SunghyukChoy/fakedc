@@ -7,10 +7,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class LeaveDTO {
+public class LeaveDTO extends ProcedureResultDTO {
 
   private String MEM_ID;
-  private int ERR_CD;
-  private String ERR_MSG;
 
 }

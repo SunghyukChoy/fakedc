@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import my.likeaglow.fakedc.common.GlobalVariable;
 import my.likeaglow.fakedc.model.AuthCheckDTO;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
 import my.likeaglow.fakedc.model.MemberVO;
@@ -32,13 +33,14 @@ public class HomeController {
   private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
   @Autowired
-  MemberRepository memberRepository;
+  private MemberRepository memberRepository;
 
   /**
    * Simply selects the home view to render by returning its name.
    */
   @RequestMapping(value = "/", method = RequestMethod.GET)
   public String home(Locale locale, Model model, HttpSession session) {
+    // 컨트롤러 클래스의 메소드 리턴 타입이 String이면 리턴 값은 view 페이지의 경로를 나타낸다.(jsp 파일의 경로)
     logger.info("Welcome home! The client locale is {}.", locale);
 
     Date date = new Date();
@@ -47,7 +49,7 @@ public class HomeController {
     String formattedDate = dateFormat.format(date);
 
     model.addAttribute("serverTime", formattedDate);
-    model.addAttribute("member", session.getAttribute("member"));
+    model.addAttribute("member", session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY));
 
     return "home";
   }
@@ -59,7 +61,7 @@ public class HomeController {
    */
   @GetMapping("/error")
   public ModelAndView error() {
-    ModelAndView mv = new ModelAndView("member/errorpage");
+    ModelAndView mv = new ModelAndView("error/errorpage");
     // new ModelAndView("jsp 파일 경로")
     return mv;
   }

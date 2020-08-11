@@ -60,7 +60,8 @@
 		</div>
 
 		<button type="submit">제출</button>
-		<button type="button" onclick="history.back(-1)">게시판으로</button>
+		<button type="button" onclick="history.back(-1)">게시판으로</button><%-- 뒤로 가기 --%>
+    
 	</form>
 </body>
 </html>
