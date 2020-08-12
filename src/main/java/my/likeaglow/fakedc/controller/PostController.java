@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import my.likeaglow.fakedc.common.GlobalVariable;
+import my.likeaglow.fakedc.model.DetailDTO;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
+import my.likeaglow.fakedc.model.PostVO;
 import my.likeaglow.fakedc.model.writePostDTO;
 import my.likeaglow.fakedc.service.PostService;
 
@@ -82,6 +84,8 @@ public class PostController {
     }
 
     mv.setViewName("redirect:" + postId);
+    // "redirect:" : 현재 클래스까지의 경로를 나타낸다.
+    // "redirect:" + postId : http://localhost:8080/fakedc/post/postId
     return mv;
   }
 
@@ -93,7 +97,24 @@ public class PostController {
    */
   @GetMapping("/{postId}")
   public ModelAndView detail(@PathVariable long postId) {
-    return new ModelAndView("post/detail");
+    // @PathVariable : 매핑명의 {탬플릿변수}에서 값을 받아온다(URL에서 값을 받아온다).
+    // 매핑명의 {탬플릿변수}명과 매개변수의 이름은 같아야 한다. null이나 공백 값이 들어갈 수 있는 경우라면 사용하지 말아야 한다.
+    ModelAndView mv = new ModelAndView("post/detail");
+
+    DetailDTO detailDTO = new DetailDTO();
+    detailDTO.setPOST_ID(postId);
+
+    PostVO postVO = postService.detail(detailDTO);
+
+    mv.addObject("vo", postVO);
+
+    return mv;
+  }
+
+  @GetMapping("/postList")
+  public ModelAndView postList() {
+    ModelAndView mv = new ModelAndView("error/errorpage");
+    return mv;
   }
 
 }

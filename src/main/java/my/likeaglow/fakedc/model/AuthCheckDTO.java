@@ -32,7 +32,7 @@ public class AuthCheckDTO extends ProcedureResultDTO {
    * @return
    */
   public boolean isLoginSuccess() {
-    return isProcedureCallSuccess();
+    return isSuccessCall();
   }
 
 }

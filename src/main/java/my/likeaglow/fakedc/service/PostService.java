@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import my.likeaglow.fakedc.model.DetailDTO;
 import my.likeaglow.fakedc.model.PostVO;
 import my.likeaglow.fakedc.model.writePostDTO;
 import my.likeaglow.fakedc.repository.PostRepository;
@@ -48,5 +49,18 @@ public class PostService {
     }
 
     return writePostDTO.getPOST_ID();
+  }
+
+  /**
+   * 글 보기
+   * 
+   * @param postId
+   * @return
+   */
+  public PostVO detail(DetailDTO detailDTO) {
+
+    PostVO postVO = postRepository.selectPost(detailDTO);
+
+    return postVO;
   }
 }

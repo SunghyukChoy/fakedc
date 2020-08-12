@@ -33,6 +33,6 @@ public class UpdateMemberDTO extends ProcedureResultDTO {
    * @return
    */
   public boolean isUpdateSuccess() {
-    return isProcedureCallSuccess();
+    return isSuccessCall();
   }
 }

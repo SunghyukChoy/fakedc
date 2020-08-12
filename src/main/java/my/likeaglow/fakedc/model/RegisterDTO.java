@@ -28,11 +28,18 @@ public class RegisterDTO extends ProcedureResultDTO {
    * @return
    */
   public boolean isInvalidDTO() {
-    return MEM_ID.equals("") || MEM_NAME.equals("") || MEM_PASSWORD.equals("") || EMAIL.equals("")
-        || BIRTHDAY.equals("") || PHONE_NUM.equals("") || INFO_OFFER.equals("");
+    if (MEM_ID.equals("") || MEM_NAME.equals("") || MEM_PASSWORD.equals("") || EMAIL.equals("") || BIRTHDAY.equals("")
+        || PHONE_NUM.equals("") || INFO_OFFER.equals("")) {
+      return true;
+    }
+    if (MEM_ID.length() > 20 || MEM_NAME.length() > 30 || MEM_PASSWORD.length() > 100 || EMAIL.length() > 50
+        || PHONE_NUM.length() > 20 || BIRTHDAY.length() > 10 || INFO_OFFER.length() > 10) {
+      return true;
+    }
+    return false;
   }
 
   public boolean isRegisterSuccess() {
-    return isProcedureCallSuccess();
+    return isSuccessCall();
   }
 }
