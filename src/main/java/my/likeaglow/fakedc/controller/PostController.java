@@ -110,11 +110,4 @@ public class PostController {
 
     return mv;
   }
-
-  @GetMapping("/postList")
-  public ModelAndView postList() {
-    ModelAndView mv = new ModelAndView("error/errorpage");
-    return mv;
-  }
-
 }

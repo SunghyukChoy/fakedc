@@ -1,8 +1,11 @@
 package my.likeaglow.fakedc.repository;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import my.likeaglow.fakedc.model.DetailDTO;
+import my.likeaglow.fakedc.model.PostListDTO;
 import my.likeaglow.fakedc.model.PostVO;
 import my.likeaglow.fakedc.model.writePostDTO;
 
@@ -15,5 +18,8 @@ public interface PostRepository {
 
   // 글보기
   public PostVO selectPost(DetailDTO detailDTO);
+
+  // 글 목록 불러오기
+  public List<PostVO> postList(PostListDTO postListDTO);
 
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import my.likeaglow.fakedc.model.DetailDTO;
+import my.likeaglow.fakedc.model.PostListDTO;
 import my.likeaglow.fakedc.model.PostVO;
 import my.likeaglow.fakedc.model.writePostDTO;
 import my.likeaglow.fakedc.repository.PostRepository;
@@ -62,5 +63,25 @@ public class PostService {
     PostVO postVO = postRepository.selectPost(detailDTO);
 
     return postVO;
+  }
+
+  /**
+   * 게시글 불러오기
+   * 
+   * @param postListDTO
+   * @return
+   */
+  public List<PostVO> getPosts(PostListDTO postListDTO) {
+    logger.info("PostService.getPosts() 시작");
+
+    List<PostVO> list = postRepository.postList(postListDTO);
+
+    logger.info("쿼리 수행 결과 : " + postListDTO.getERR_CD());
+
+    for (PostVO postVO : list) {
+      logger.info("각 게시글" + postVO);
+    }
+    return list;
+
   }
 }

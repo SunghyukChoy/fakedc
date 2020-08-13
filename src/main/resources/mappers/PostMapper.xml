@@ -29,5 +29,21 @@
     ,#{ERR_MSG, mode=OUT, jdbcType=VARCHAR}) }
   </select>
   
+   <!-- 글 목록 불러오기 -->
+  <select id="postList" 
+    parameterType="my.likeaglow.fakedc.model.PostListDTO"
+    resultType="my.likeaglow.fakedc.model.PostVO"    
+    statementType="CALLABLE">
+    { call PST_sd_List (
+     #{BOARD_ID}
+    ,#{SEARCH_TYPE}
+    ,#{POST_TYPE}
+    ,#{KEYWORD}
+    ,#{PAGING_SIZE}
+    ,#{PAGINE_INDEX}
+    ,#{ERR_CD, mode=OUT, jdbcType=INTEGER}
+    ,#{ERR_MSG, mode=OUT, jdbcType=VARCHAR}) }
+  </select>
+  
   
 </mapper>
