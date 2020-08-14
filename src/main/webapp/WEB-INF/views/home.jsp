@@ -7,19 +7,22 @@
 </head>
 <body>
   <h1>Hello world!</h1>
-
-<!-- 숙제 #1번 힌트 -->
+  
   <c:choose>
     <c:when test="${ member != null }">
-      <h1>${ member.MEM_NAME }님 환영합니다.</h1>
-      <a href="member/myInfo">회원정보 보기</a>
-      <a href="post/write">글쓰기</a>
+      <h1>${ member.MEM_NAME }님환영합니다.</h1>
+      <a href="board/music">음악 게시판</a>
+      <a href="board/game">게임 게시판</a>
+      <a href="board/football">축구 게시판</a>
+      <a href="member/myInfo">회원정보 보기</a>      
       <a href="member/logout">로그아웃</a>
     </c:when>
     <c:otherwise>
       <h1>환영 메시지를 보고 싶으면 로그인을 하라우</h1>
-      <a href="member/login">로그인</a>
-      <a href="post/write">글쓰기</a>
+      <a href="board/music">음악 게시판</a>
+      <a href="board/game">게임 게시판</a>
+      <a href="board/football">축구 게시판</a>
+      <a href="member/login">로그인</a>      
       <a href="member/register">회원가입</a>
     </c:otherwise>
   </c:choose>

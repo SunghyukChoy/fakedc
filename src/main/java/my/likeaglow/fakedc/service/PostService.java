@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import my.likeaglow.fakedc.model.DetailDTO;
 import my.likeaglow.fakedc.model.PostListDTO;
 import my.likeaglow.fakedc.model.PostVO;
 import my.likeaglow.fakedc.model.writePostDTO;
@@ -58,9 +57,9 @@ public class PostService {
    * @param postId
    * @return
    */
-  public PostVO detail(DetailDTO detailDTO) {
+  public PostVO detail(Long postId) {
 
-    PostVO postVO = postRepository.selectPost(detailDTO);
+    PostVO postVO = postRepository.selectPost(postId);
 
     return postVO;
   }
@@ -76,11 +75,6 @@ public class PostService {
 
     List<PostVO> list = postRepository.postList(postListDTO);
 
-    logger.info("쿼리 수행 결과 : " + postListDTO.getERR_CD());
-
-    for (PostVO postVO : list) {
-      logger.info("각 게시글" + postVO);
-    }
     return list;
 
   }

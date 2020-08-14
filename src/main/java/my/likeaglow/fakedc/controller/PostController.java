@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import my.likeaglow.fakedc.common.GlobalVariable;
-import my.likeaglow.fakedc.model.DetailDTO;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
 import my.likeaglow.fakedc.model.PostVO;
 import my.likeaglow.fakedc.model.writePostDTO;
@@ -53,7 +52,7 @@ public class PostController {
   // 글쓰기 기본값 생성 메소드
   private void setTestPost(ModelAndView mv, LoginMemberDTO loginMember) {
     writePostDTO writePostDTO = new writePostDTO();
-    writePostDTO.setBOARD_ID("test");
+    writePostDTO.setBOARD_ID("music");
     writePostDTO.setPOST_TITLE("테스트 게시글입니다.");
     writePostDTO.setPOST_CONTENT("게시글 테스트입니다.\n잘부탁드립니다.");
     writePostDTO.setPOST_PASSWORD("1111");
@@ -101,10 +100,7 @@ public class PostController {
     // 매핑명의 {탬플릿변수}명과 매개변수의 이름은 같아야 한다. null이나 공백 값이 들어갈 수 있는 경우라면 사용하지 말아야 한다.
     ModelAndView mv = new ModelAndView("post/detail");
 
-    DetailDTO detailDTO = new DetailDTO();
-    detailDTO.setPOST_ID(postId);
-
-    PostVO postVO = postService.detail(detailDTO);
+    PostVO postVO = postService.detail(postId);
 
     mv.addObject("vo", postVO);
 

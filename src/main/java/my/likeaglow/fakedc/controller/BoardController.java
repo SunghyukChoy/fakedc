@@ -46,22 +46,24 @@ public class BoardController {
 
     List<PostVO> list = postService.getPosts(postListDTO);
 
-    logger.info("여기까지 오냐");
-
-    for (PostVO postVO : list) {
-      logger.info("각 게시글" + postVO);
-    }
-
     /*
-     * int searchType = 0; // 없음 int postType = 1; // 일반 String keyword = ""; int
-     * pageSize = 10; int pageIndex = 0;
+     * for (PostVO postVO : list) { logger.info("각 게시글" + postVO); }
      */
+    // String test = "mv 테스트";
+
+    mv.addObject("postList", list);
+    mv.addObject("vo", boardId);
+    // mv.addObject("vo", test);
 
     return mv;
   }
 
   // 게시글 불러오기 테스트
   private void setPostListTest(String boardId, PostListDTO postListDTO) {
+    /*
+     * int searchType = 0; // 없음 int postType = 1; // 일반 String keyword = ""; int
+     * pageSize = 10; int pageIndex = 0;
+     */
     postListDTO.setBOARD_ID(boardId);
     postListDTO.setSEARCH_TYPE(0); // 없음
     postListDTO.setPOST_TYPE(1); // 일반
