@@ -233,7 +233,7 @@ public class MemberController {
    * @return
    */
   @PostMapping("/updateInfo")
-  public ModelAndView updateInfoProcess(UpdateMemberDTO updateMemberDTO) {
+  public ModelAndView updateInfoProcess(UpdateMemberDTO updateMemberDTO, HttpSession session) {
     logger.info("MemberController.updateInfoProcess() 시작");
 
     logger.info("회원이 입력한 수정된 정보 : " + updateMemberDTO);
@@ -255,6 +255,8 @@ public class MemberController {
       return mv;
     }
 
+    session.setAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY,
+        new LoginMemberDTO(updatedVO.getMEM_ID(), updatedVO.getMEM_NAME()));
     mv.addObject("vo", updatedVO);
 
     return mv;

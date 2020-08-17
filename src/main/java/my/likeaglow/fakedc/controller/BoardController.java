@@ -52,7 +52,7 @@ public class BoardController {
     // String test = "mv 테스트";
 
     mv.addObject("postList", list);
-    mv.addObject("vo", boardId);
+    mv.addObject("boardId", boardId);
     // mv.addObject("vo", test);
 
     return mv;

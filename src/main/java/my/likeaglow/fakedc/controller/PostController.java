@@ -32,8 +32,8 @@ public class PostController {
    * 
    * @return
    */
-  @GetMapping("/write")
-  public ModelAndView write(HttpSession session) {
+  @GetMapping("/write/{boardId}")
+  public ModelAndView write(HttpSession session, @PathVariable String boardId) {
 
     if (session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY) == null) {
       ModelAndView mv = new ModelAndView("member/request_login");
@@ -44,15 +44,19 @@ public class PostController {
 
     ModelAndView mv = new ModelAndView("post/write");
 
-    setTestPost(mv, loginMember);
+    setTestPost(mv, loginMember, boardId);
 
     return mv;
   }
 
   // 글쓰기 기본값 생성 메소드
-  private void setTestPost(ModelAndView mv, LoginMemberDTO loginMember) {
+  private void setTestPost(ModelAndView mv, LoginMemberDTO loginMember, String boardId) {
+    if (boardId == null || boardId == "") {
+      boardId = "music"; // 기본값으로 music board에 입력
+    }
+
     writePostDTO writePostDTO = new writePostDTO();
-    writePostDTO.setBOARD_ID("music");
+    writePostDTO.setBOARD_ID(boardId);
     writePostDTO.setPOST_TITLE("테스트 게시글입니다.");
     writePostDTO.setPOST_CONTENT("게시글 테스트입니다.\n잘부탁드립니다.");
     writePostDTO.setPOST_PASSWORD("1111");

@@ -95,7 +95,7 @@
       
       <span>로그인 해줘잉</span>      
       <div class="form-button-group">
-        <a href="../member/login"><button type="button" class="confirm">로그인</button></a>        
+        <a href="/fakedc/member/login"><button type="button" class="confirm">로그인</button></a>        
         <button type="button" onclick="history.back(-1)">뒤로 가기</button>
       </div>
     </form>

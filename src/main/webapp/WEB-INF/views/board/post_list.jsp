@@ -124,7 +124,7 @@
       </div>
       
       <a href="..">메인 페이지</a>
-      <a href="../post/write">글쓰기</a>
+      <a href="../post/write/${ boardId }">글쓰기</a>
   </div>
   
 </body>

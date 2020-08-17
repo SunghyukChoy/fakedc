@@ -20,4 +20,6 @@ public class JspViewHelper {
     return dt.format(DEFAULT_DATETIME_PATTERN);
   }
 
+  // 1시간전 10시간전.. / 1일전 3일전 / 2020-10-12
+
 }

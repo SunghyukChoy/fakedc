@@ -32,7 +32,7 @@
 	작성자가 로그인이 되어있으면 글쓴이 필드를 없게 처리하고
 	자동으로 로그인 회원 ID가 들어가도록 컨트롤러 내부 메서드를 수정할 것
  -->
-	<form method="post">
+	<form method="post" action="/fakedc/post/write">
 		<input type="hidden" name="BOARD_ID" value="${ vo.BOARD_ID }" />
 
 		<div>
