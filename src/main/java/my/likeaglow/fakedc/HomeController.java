@@ -2,6 +2,7 @@ package my.likeaglow.fakedc;
 
 import java.text.DateFormat;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -124,6 +125,19 @@ public class HomeController {
     // 불변객체는 새로운 값을 저장할 때마다 객체를 새로 생성해야 하므로 메모리 소비가 커짐.
 
     logger.info(INSANE_DATE2.toString());
+  }
+
+  @GetMapping(value = "/test5")
+  public void test5() {
+    LocalDateTime ct = LocalDateTime.now();
+    LocalDateTime ct2 = LocalDateTime.of(2020, 8, 19, 15, 9, 00, 0);
+
+    logger.info("" + ct.isAfter(ct2));
+
+    logger.info("" + ct.compareTo(ct2));
+
+    logger.info(String.valueOf(ChronoUnit.MINUTES.between(ct2, ct)));
+
   }
 
 }

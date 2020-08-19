@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="my.likeaglow.fakedc.utils.JspViewHelper"%>
 
    
 <!DOCTYPE html>
@@ -112,7 +115,7 @@
             <td>${ (post.POST_TYPE == 1 ? "일반" : "공지")}</td>           
             <td>${ post.POST_TITLE }</td>            
             <td>${ post.CREATE_USER }</td>
-            <td>${ post.CREATE_DATE }</td>
+            <td>${ JspViewHelper.getTimeDifference(post.CREATE_DATE) }</td>
             <td>${ post.VIEW_COUNT }</td>
             <td>${ post.POST_RECOMMEND_COUNT }</td>
             <td>${ post.POST_UNRECOMMEND_COUNT }</td>            
