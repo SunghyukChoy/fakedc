@@ -113,7 +113,7 @@
           <tr>          
             <th>${ post.POST_ID }</th>
             <td>${ (post.POST_TYPE == 1 ? "일반" : "공지")}</td>           
-            <td>${ post.POST_TITLE }</td>            
+            <td><a href="../post/${ post.POST_ID }">${ post.POST_TITLE }</a></td>
             <td>${ post.CREATE_USER }</td>
             <td>${ JspViewHelper.getTimeDifference(post.CREATE_DATE) }</td>
             <td>${ post.VIEW_COUNT }</td>
