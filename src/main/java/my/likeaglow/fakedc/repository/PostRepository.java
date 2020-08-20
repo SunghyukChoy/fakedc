@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import my.likeaglow.fakedc.model.PostAuthCheckDTO;
 import my.likeaglow.fakedc.model.PostListDTO;
 import my.likeaglow.fakedc.model.PostVO;
 import my.likeaglow.fakedc.model.UpdatePostDTO;
@@ -22,7 +23,9 @@ public interface PostRepository {
   // 글 목록 불러오기
   public List<PostVO> postList(PostListDTO postListDTO);
 
+  // 게시글 본인 인증
+  public void authCheck(PostAuthCheckDTO postAuthCheckDTO);
+
   // 글 수정하기
   public PostVO updatePost(UpdatePostDTO updatePostDTO);
-
 }

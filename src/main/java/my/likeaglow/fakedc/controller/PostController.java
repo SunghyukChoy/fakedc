@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import my.likeaglow.fakedc.common.GlobalVariable;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
+import my.likeaglow.fakedc.model.PostAuthCheckDTO;
 import my.likeaglow.fakedc.model.PostVO;
 import my.likeaglow.fakedc.model.UpdatePostDTO;
 import my.likeaglow.fakedc.model.writePostDTO;
@@ -122,8 +123,7 @@ public class PostController {
   public ModelAndView update(@PathVariable long postId, HttpSession session) {
     logger.info("받은 postId : " + postId);
 
-    LoginMemberDTO loginMember = (LoginMemberDTO) session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY);
-    if (loginMember == null) {
+    if (session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY) == null) {
       ModelAndView mv = new ModelAndView("member/request_login");
       return mv;
     }
@@ -150,7 +150,9 @@ public class PostController {
 
     LoginMemberDTO logimMember = (LoginMemberDTO) session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY);
 
-    PostVO updatedPost = postService.update(updatePostDTO, logimMember.getMEM_ID());
+    PostAuthCheckDTO postAuthCheckDTO = new PostAuthCheckDTO(updatePostDTO.getPOST_ID(), logimMember.getMEM_ID());
+
+    PostVO updatedPost = postService.update(postAuthCheckDTO, updatePostDTO);
 
     logger.info("PostController.updateProcess() 업데이트 PostVO : " + updatedPost);
 
@@ -167,4 +169,5 @@ public class PostController {
 
     return mv;
   }
+
 }

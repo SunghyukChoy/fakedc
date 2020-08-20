@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import my.likeaglow.fakedc.model.PostAuthCheckDTO;
 import my.likeaglow.fakedc.model.PostListDTO;
 import my.likeaglow.fakedc.model.PostVO;
 import my.likeaglow.fakedc.model.UpdatePostDTO;
@@ -87,22 +88,24 @@ public class PostService {
    * @param memberId
    * @return
    */
-  public PostVO update(UpdatePostDTO updatePostDTO, String memberId) {
+  public PostVO update(PostAuthCheckDTO postAuthCheckDTO, UpdatePostDTO updatePostDTO) {
     logger.info("PostService.updatePost() 시작");
+
+    logger.info("인증 전 postAuthCheckDTO ERR_CD : " + postAuthCheckDTO.getERR_CD());
+    postRepository.authCheck(postAuthCheckDTO);
+    logger.info("인증 후 postAuthCheckDTO ERR_CD : " + postAuthCheckDTO.getERR_CD());
+
+    if (!postAuthCheckDTO.isSuccessCall()) { // 본인 게시글임이 확인되지 않는다면 여기서 리턴됨.
+      return null;
+    }
 
     PostVO updatedPost = postRepository.updatePost(updatePostDTO);
 
-    logger.info("받은 memberId : " + memberId);
     logger.info("업데이트된 postVO : " + updatedPost);
 
     if (!updatePostDTO.isSuccessCall()) {
       return null;
     }
-
-    if (!updatedPost.getCREATE_USER().equals(memberId)) {
-      return null;
-    }
-
     return updatedPost;
   }
 }
