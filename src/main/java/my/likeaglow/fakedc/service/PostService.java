@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import my.likeaglow.fakedc.model.PostListDTO;
 import my.likeaglow.fakedc.model.PostVO;
+import my.likeaglow.fakedc.model.UpdatePostDTO;
 import my.likeaglow.fakedc.model.writePostDTO;
 import my.likeaglow.fakedc.repository.PostRepository;
 
@@ -77,5 +78,31 @@ public class PostService {
 
     return list;
 
+  }
+
+  /**
+   * 게시글 업데이트
+   * 
+   * @param updatePostDTO
+   * @param memberId
+   * @return
+   */
+  public PostVO update(UpdatePostDTO updatePostDTO, String memberId) {
+    logger.info("PostService.updatePost() 시작");
+
+    PostVO updatedPost = postRepository.updatePost(updatePostDTO);
+
+    logger.info("받은 memberId : " + memberId);
+    logger.info("업데이트된 postVO : " + updatedPost);
+
+    if (!updatePostDTO.isSuccessCall()) {
+      return null;
+    }
+
+    if (!updatedPost.getCREATE_USER().equals(memberId)) {
+      return null;
+    }
+
+    return updatedPost;
   }
 }

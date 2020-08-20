@@ -119,6 +119,16 @@ button.confirm {
       <label>글쓴이 :</label>      
       <span>${ vo.CREATE_USER }</span>
     </div>
+    
+    <div>
+      <label>작성시간 :</label>      
+      <span>${ JspViewHelper.parseString(vo.CREATE_DATE) }</span>
+    </div>
+    
+    <div>
+      <label>수정시간 :</label>      
+      <span>${ vo.UPDATE_DATE == vo.CREATE_DATE ? "수정된 이력이 없습니다" : JspViewHelper.parseString(vo.UPDATE_DATE) }</span>
+    </div>
       
     <div>
       <label>내용 :</label>
@@ -128,7 +138,7 @@ button.confirm {
     </div> 
   
   <a href="..">메인페이지</a>
-  <a href="updatePost"><button type="button">게시글 수정</button></a>
+  <a href="update/${ vo.POST_ID }"><button type="button">게시글 수정</button></a>
   <a href="deletePost"><button type="button">게시글 삭제</button></a>
   <a href="recommendPost"><button type="button">추천</button></a>
   <a href="unrecommendPost"><button type="button">비추천</button></a>

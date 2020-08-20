@@ -28,7 +28,7 @@
     )}
   </select>
   
-   <!-- 글 목록 불러오기 -->
+  <!-- 글 목록 불러오기 -->
   <select id="postList" 
     parameterType="my.likeaglow.fakedc.model.PostListDTO"
     resultType="my.likeaglow.fakedc.model.PostVO"    
@@ -40,6 +40,21 @@
     ,#{KEYWORD}
     ,#{PAGING_SIZE}
     ,#{PAGINE_INDEX}
+    ,#{ERR_CD, mode=OUT, jdbcType=INTEGER}
+    ,#{ERR_MSG, mode=OUT, jdbcType=VARCHAR}) }
+  </select>
+  
+  <!-- 글 수정하기 -->
+  <select id="updatePost" 
+    parameterType="my.likeaglow.fakedc.model.UpdatePostDTO"
+    resultType="my.likeaglow.fakedc.model.PostVO"    
+    statementType="CALLABLE">
+    { call PST_un_Post (
+     #{POST_ID}
+    ,#{POST_TITLE}
+    ,#{POST_CONTENT}
+    ,#{POST_PASSWORD}
+    ,#{POST_TYPE}    
     ,#{ERR_CD, mode=OUT, jdbcType=INTEGER}
     ,#{ERR_MSG, mode=OUT, jdbcType=VARCHAR}) }
   </select>

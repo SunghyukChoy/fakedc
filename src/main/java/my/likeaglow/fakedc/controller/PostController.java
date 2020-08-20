@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import my.likeaglow.fakedc.common.GlobalVariable;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
 import my.likeaglow.fakedc.model.PostVO;
+import my.likeaglow.fakedc.model.UpdatePostDTO;
 import my.likeaglow.fakedc.model.writePostDTO;
 import my.likeaglow.fakedc.service.PostService;
 
@@ -107,6 +108,62 @@ public class PostController {
     PostVO postVO = postService.detail(postId);
 
     mv.addObject("vo", postVO);
+
+    return mv;
+  }
+
+  /**
+   * 게시글 업데이트
+   * 
+   * @param postId
+   * @return
+   */
+  @GetMapping("/update/{postId}")
+  public ModelAndView update(@PathVariable long postId, HttpSession session) {
+    logger.info("받은 postId : " + postId);
+
+    LoginMemberDTO loginMember = (LoginMemberDTO) session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY);
+    if (loginMember == null) {
+      ModelAndView mv = new ModelAndView("member/request_login");
+      return mv;
+    }
+
+    PostVO postVO = postService.detail(postId);
+
+    ModelAndView mv = new ModelAndView("post/update");
+
+    mv.addObject("vo", postVO);
+
+    return mv;
+  }
+
+  /**
+   * 게시글 업데이트 프로세스
+   * 
+   * @param updatePostDTO
+   * @param session
+   * @return
+   */
+  @PostMapping("/update")
+  public ModelAndView updateProcess(UpdatePostDTO updatePostDTO, HttpSession session) {
+    logger.info("받은 updatePostDTO : " + updatePostDTO);
+
+    LoginMemberDTO logimMember = (LoginMemberDTO) session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY);
+
+    PostVO updatedPost = postService.update(updatePostDTO, logimMember.getMEM_ID());
+
+    logger.info("PostController.updateProcess() 업데이트 PostVO : " + updatedPost);
+
+    if (updatedPost == null) { // 쿼리 수행이 실패하거나 게시글 작성자 ID와 로그인한 ID가 달라 postService.update()의 리턴값이 null인 경우
+      ModelAndView mv = new ModelAndView("redirect:/error");
+      return mv;
+    }
+
+    logger.info("업데이트된 POST_ID : " + updatedPost.getPOST_ID());
+
+    ModelAndView mv = new ModelAndView("redirect:" + updatedPost.getPOST_ID());
+
+    mv.addObject("vo", updatedPost);
 
     return mv;
   }
