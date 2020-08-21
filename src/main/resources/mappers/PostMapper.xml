@@ -80,5 +80,14 @@
     ,#{ERR_MSG, mode=OUT, jdbcType=VARCHAR}) }
   </select>
   
+  <!-- 게시글 조회수 증가 -->
+  <select id="increaseViewCount"
+    parameterType="my.likeaglow.fakedc.model.PostViewCountDTO"        
+    statementType="CALLABLE">
+    { call PST_un_IncreaseViewCount (
+     #{POST_ID}       
+    ,#{ERR_CD, mode=OUT, jdbcType=INTEGER}
+    ,#{ERR_MSG, mode=OUT, jdbcType=VARCHAR}) }
+  </select>
   
 </mapper>

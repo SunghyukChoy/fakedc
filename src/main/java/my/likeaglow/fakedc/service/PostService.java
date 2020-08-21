@@ -11,6 +11,7 @@ import my.likeaglow.fakedc.model.DeletePostDTO;
 import my.likeaglow.fakedc.model.PostAuthCheckDTO;
 import my.likeaglow.fakedc.model.PostListDTO;
 import my.likeaglow.fakedc.model.PostVO;
+import my.likeaglow.fakedc.model.PostViewCountDTO;
 import my.likeaglow.fakedc.model.UpdatePostDTO;
 import my.likeaglow.fakedc.model.writePostDTO;
 import my.likeaglow.fakedc.repository.PostRepository;
@@ -106,6 +107,13 @@ public class PostService {
     return updatedPost;
   }
 
+  /**
+   * 게시물 삭제
+   * 
+   * @param postAuthCheckDTO
+   * @param deletePostDTO
+   * @return
+   */
   public String delete(PostAuthCheckDTO postAuthCheckDTO, DeletePostDTO deletePostDTO) {
     logger.info("PostService.deletePost() 시작");
 
@@ -117,6 +125,22 @@ public class PostService {
     }
 
     postRepository.deletePost(deletePostDTO);
+
+    return "";
+  }
+
+  /**
+   * 게시물 조회수 증가
+   * 
+   * @param postViewCountDTO
+   */
+  public String viewCount(PostViewCountDTO postViewCountDTO) {
+
+    postRepository.increaseViewCount(postViewCountDTO);
+
+    if (!postViewCountDTO.isSuccessCall()) {
+      return null;
+    }
 
     return "";
   }

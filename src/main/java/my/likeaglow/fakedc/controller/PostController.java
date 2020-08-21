@@ -17,6 +17,7 @@ import my.likeaglow.fakedc.model.DeletePostDTO;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
 import my.likeaglow.fakedc.model.PostAuthCheckDTO;
 import my.likeaglow.fakedc.model.PostVO;
+import my.likeaglow.fakedc.model.PostViewCountDTO;
 import my.likeaglow.fakedc.model.UpdatePostDTO;
 import my.likeaglow.fakedc.model.writePostDTO;
 import my.likeaglow.fakedc.service.PostService;
@@ -96,7 +97,7 @@ public class PostController {
   }
 
   /**
-   * 글 보기
+   * 글 보기, 게시물 조회수 증가
    * 
    * @param postId
    * @return
@@ -105,10 +106,16 @@ public class PostController {
   public ModelAndView detail(@PathVariable long postId) {
     // @PathVariable : 매핑명의 {탬플릿변수}에서 값을 받아온다(URL에서 값을 받아온다).
     // 매핑명의 {탬플릿변수}명과 매개변수의 이름은 같아야 한다. null이나 공백 값이 들어갈 수 있는 경우라면 사용하지 말아야 한다.
+
+    PostViewCountDTO postViewCountDTO = new PostViewCountDTO(postId);
+    String result = postService.viewCount(postViewCountDTO);
+    if (result == null) {
+      ModelAndView mv = new ModelAndView("redirect:/error");
+      return mv;
+    }
+
     ModelAndView mv = new ModelAndView("post/detail");
-
     PostVO postVO = postService.detail(postId);
-
     mv.addObject("vo", postVO);
 
     return mv;
@@ -172,6 +179,15 @@ public class PostController {
     return mv;
   }
 
+  /**
+   * 게시글 삭제
+   * 
+   * @param boardId
+   * @param postId
+   * @param deletePostDTO
+   * @param session
+   * @return
+   */
   @GetMapping("/delete/{boardId}/{postId}") // @PathVariable로 매개변수 여러 개 받을 수 있음.
   public ModelAndView delete(@PathVariable String boardId, @PathVariable long postId, DeletePostDTO deletePostDTO,
       HttpSession session) {
@@ -194,7 +210,11 @@ public class PostController {
     PostAuthCheckDTO postAuthCheckDTO = new PostAuthCheckDTO(postId, logimMember.getMEM_ID());
     // postAuthCheckDTO : 삭제하려는 게시물의 POST_ID와 현재 로그인한 멤버의 MEM_ID를 담은 객체
 
-    postService.delete(postAuthCheckDTO, deletePostDTO);
+    String result = postService.delete(postAuthCheckDTO, deletePostDTO);
+    if (result == null) {
+      ModelAndView mv = new ModelAndView("redirect:/error");
+      return mv;
+    }
 
     ModelAndView mv = new ModelAndView("redirect:/board/" + boardId);
     // 게시물 삭제 후 게시물 목록으로 이동

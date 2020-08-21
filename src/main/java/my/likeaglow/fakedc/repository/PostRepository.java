@@ -8,6 +8,7 @@ import my.likeaglow.fakedc.model.DeletePostDTO;
 import my.likeaglow.fakedc.model.PostAuthCheckDTO;
 import my.likeaglow.fakedc.model.PostListDTO;
 import my.likeaglow.fakedc.model.PostVO;
+import my.likeaglow.fakedc.model.PostViewCountDTO;
 import my.likeaglow.fakedc.model.UpdatePostDTO;
 import my.likeaglow.fakedc.model.writePostDTO;
 
@@ -32,4 +33,7 @@ public interface PostRepository {
 
   // 글 삭제하기
   public void deletePost(DeletePostDTO deletePostDTO);
+
+  // 글 조회수 증가
+  public void increaseViewCount(PostViewCountDTO postViewCountDTO);
 }
