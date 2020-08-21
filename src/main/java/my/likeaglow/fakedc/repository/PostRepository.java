@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import my.likeaglow.fakedc.model.DeletePostDTO;
 import my.likeaglow.fakedc.model.PostAuthCheckDTO;
 import my.likeaglow.fakedc.model.PostListDTO;
 import my.likeaglow.fakedc.model.PostVO;
@@ -28,4 +29,7 @@ public interface PostRepository {
 
   // 글 수정하기
   public PostVO updatePost(UpdatePostDTO updatePostDTO);
+
+  // 글 삭제하기
+  public void deletePost(DeletePostDTO deletePostDTO);
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import my.likeaglow.fakedc.common.GlobalVariable;
+import my.likeaglow.fakedc.model.DeletePostDTO;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
 import my.likeaglow.fakedc.model.PostAuthCheckDTO;
 import my.likeaglow.fakedc.model.PostVO;
@@ -151,6 +152,7 @@ public class PostController {
     LoginMemberDTO logimMember = (LoginMemberDTO) session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY);
 
     PostAuthCheckDTO postAuthCheckDTO = new PostAuthCheckDTO(updatePostDTO.getPOST_ID(), logimMember.getMEM_ID());
+    // postAuthCheckDTO : 수정하려는 게시물의 POST_ID와 현재 로그인한 멤버의 MEM_ID를 담은 객체
 
     PostVO updatedPost = postService.update(postAuthCheckDTO, updatePostDTO);
 
@@ -168,6 +170,36 @@ public class PostController {
     mv.addObject("vo", updatedPost);
 
     return mv;
+  }
+
+  @GetMapping("/delete/{boardId}/{postId}") // @PathVariable로 매개변수 여러 개 받을 수 있음.
+  public ModelAndView delete(@PathVariable String boardId, @PathVariable long postId, DeletePostDTO deletePostDTO,
+      HttpSession session) {
+
+    logger.info("받은 postId : " + postId);
+    logger.info("받은 boardId : " + boardId);
+    logger.info("deletePostDTO : " + deletePostDTO);
+
+    deletePostDTO.setPOST_ID(postId);
+    // postId : 삭제하려는 게시물의 POST_ID
+    logger.info("deletePostDTO : " + deletePostDTO);
+
+    if (session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY) == null) {
+      ModelAndView mv = new ModelAndView("member/request_login");
+      return mv;
+    }
+
+    LoginMemberDTO logimMember = (LoginMemberDTO) session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY);
+
+    PostAuthCheckDTO postAuthCheckDTO = new PostAuthCheckDTO(postId, logimMember.getMEM_ID());
+    // postAuthCheckDTO : 삭제하려는 게시물의 POST_ID와 현재 로그인한 멤버의 MEM_ID를 담은 객체
+
+    postService.delete(postAuthCheckDTO, deletePostDTO);
+
+    ModelAndView mv = new ModelAndView("redirect:/board/" + boardId);
+    // 게시물 삭제 후 게시물 목록으로 이동
+    return mv;
+
   }
 
 }

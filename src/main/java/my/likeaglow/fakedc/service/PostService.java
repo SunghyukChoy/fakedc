@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import my.likeaglow.fakedc.model.DeletePostDTO;
 import my.likeaglow.fakedc.model.PostAuthCheckDTO;
 import my.likeaglow.fakedc.model.PostListDTO;
 import my.likeaglow.fakedc.model.PostVO;
@@ -21,11 +22,6 @@ public class PostService {
 
   @Autowired
   private PostRepository postRepository;
-
-  public List<PostVO> getPosts() {
-    // TODO Auto-generated method stub
-    return null;
-  }
 
   /**
    * 글쓰기 등록에 성공하면 POST_ID를 출력 게시글을 등록하기 위한 상태가 유효하지 않으면 -1 출력 데이터베이스에 등록이 실패하면 -2
@@ -91,11 +87,12 @@ public class PostService {
   public PostVO update(PostAuthCheckDTO postAuthCheckDTO, UpdatePostDTO updatePostDTO) {
     logger.info("PostService.updatePost() 시작");
 
-    logger.info("인증 전 postAuthCheckDTO ERR_CD : " + postAuthCheckDTO.getERR_CD());
     postRepository.authCheck(postAuthCheckDTO);
     logger.info("인증 후 postAuthCheckDTO ERR_CD : " + postAuthCheckDTO.getERR_CD());
 
-    if (!postAuthCheckDTO.isSuccessCall()) { // 본인 게시글임이 확인되지 않는다면 여기서 리턴됨.
+    if (!postAuthCheckDTO.isSuccessCall()) {
+      // 디비에서 수정하려는 게시물의 POST_ID로 조회하여 그 게시물의 CREATE_USER가 현재 로그인한 MEM_ID와 같은지 확인
+      // 본인 게시글임이 확인되지 않는다면 여기서 리턴됨.
       return null;
     }
 
@@ -107,5 +104,20 @@ public class PostService {
       return null;
     }
     return updatedPost;
+  }
+
+  public String delete(PostAuthCheckDTO postAuthCheckDTO, DeletePostDTO deletePostDTO) {
+    logger.info("PostService.deletePost() 시작");
+
+    postRepository.authCheck(postAuthCheckDTO);
+    if (!postAuthCheckDTO.isSuccessCall()) {
+      // 디비에서 삭제하려는 게시물의 POST_ID로 조회하여 그 게시물의 CREATE_USER가 현재 로그인한 MEM_ID와 같은지 확인
+      // 본인 게시글임이 확인되지 않는다면 여기서 리턴됨.
+      return null;
+    }
+
+    postRepository.deletePost(deletePostDTO);
+
+    return "";
   }
 }
