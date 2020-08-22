@@ -1,5 +1,7 @@
 package my.likeaglow.fakedc.controller;
 
+import java.io.UnsupportedEncodingException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +97,7 @@ public class MemberController extends BaseController {
    * 회원 로그인 페이지
    * 
    * @return 로그인 페이지 호출
+   * @throws UnsupportedEncodingException
    */
   @GetMapping("/login")
   public ModelAndView login() {
@@ -102,6 +105,8 @@ public class MemberController extends BaseController {
     ModelAndView mv = new ModelAndView("member/login");
 
     setTestLogin(mv);
+//    returnUrl = URLDecoder.decode(returnUrl, "UTF-8");
+//    mv.addObject("returnUrl", returnUrl);
 
     return mv;
   }
@@ -123,7 +128,7 @@ public class MemberController extends BaseController {
    * @return 성공시 개인정보 상세페이지로 이동, 실패시 포스트백
    */
   @PostMapping("/login")
-  public ModelAndView loginProcess(AuthCheckDTO authCheckDTO) {
+  public ModelAndView loginProcess(AuthCheckDTO authCheckDTO, String returnUrl) {
     // TODO 3번 : 아래 로깅을 통해서 AuthCkeckVO의 필드값을 체크하기 위해 AuthCheckVO 에 적절한 어노테이션 삽입, 아래
     // 코드는 수정하지 말 것
     logger.debug("로그인 객체 로그 : " + authCheckDTO);
@@ -139,7 +144,12 @@ public class MemberController extends BaseController {
       mv.addObject("vo", authCheckDTO);
       // "vo"를 key로 하고("vo"는 기존에 있던 키. view 페이지에서 이 key로 접근하므로 똑같이 맞춰줌.)
       // 비밀번호가 제거된 authCheckVO를 value로 해서 mv에 저장
+      mv.addObject("returnUrl", returnUrl);
       return mv;
+    }
+
+    if (returnUrl != null && !returnUrl.equals("")) {
+      return new ModelAndView("redirect:" + returnUrl);
     }
 
     // TODO 4번: 멤버 서비스에 적절한 로그인 시도 메서드를 성공하여 결과에 따라 다음과 같이 처리한다

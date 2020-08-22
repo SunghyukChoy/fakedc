@@ -97,6 +97,7 @@ button.confirm {
   <div class="container">
 
     <form class="form-login" method="post">
+    
       <h1>DCINSIDE 로그인</h1>
       <hr style="margin: 20px 0px; border: 1px solid #eee;" />
       <div class="form-control">

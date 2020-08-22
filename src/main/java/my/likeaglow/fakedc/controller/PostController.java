@@ -1,5 +1,8 @@
 package my.likeaglow.fakedc.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,14 +126,15 @@ public class PostController extends BaseController {
    * 
    * @param postId
    * @return
+   * @throws UnsupportedEncodingException
    */
   @GetMapping("/update/{postId}")
-  public ModelAndView update(@PathVariable long postId) {
+  public ModelAndView update(@PathVariable long postId) throws UnsupportedEncodingException {
     logger.info("받은 postId : " + postId);
     ModelAndView mv = new ModelAndView();
 
     if (!hasLoginMember()) {
-      mv.setViewName("member/request_login");
+      mv.setViewName("redirect:/member/login?returnUrl=" + URLEncoder.encode("/post/update/" + postId, "UTF-8"));
       return mv;
     }
 
