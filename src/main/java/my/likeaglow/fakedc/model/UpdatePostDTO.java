@@ -13,6 +13,7 @@ public class UpdatePostDTO extends ProcedureResultDTO {
   private String POST_TITLE;
   private String POST_CONTENT;
   private String POST_PASSWORD;
+  private String MEM_ID;
   private int POST_TYPE;
 
 }

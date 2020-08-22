@@ -43,18 +43,7 @@
     ,#{ERR_CD, mode=OUT, jdbcType=INTEGER}
     ,#{ERR_MSG, mode=OUT, jdbcType=VARCHAR}) }
   </select>
-  
-  <!-- 글 본인 인증 -->
-  <select id="authCheck"
-    parameterType="my.likeaglow.fakedc.model.PostAuthCheckDTO"    
-    statementType="CALLABLE">
-    { call PST_sr_AuthCheck (
-     #{POST_ID}
-    ,#{MEM_ID}
-    ,#{ERR_CD, mode=OUT, jdbcType=INTEGER}
-    ,#{ERR_MSG, mode=OUT, jdbcType=VARCHAR}) }
-  </select>
-  
+ 
   <!-- 글 수정하기 -->
   <select id="updatePost"
     parameterType="my.likeaglow.fakedc.model.UpdatePostDTO"
@@ -64,6 +53,7 @@
      #{POST_ID}
     ,#{POST_TITLE}
     ,#{POST_CONTENT}
+    ,#{MEM_ID}
     ,#{POST_PASSWORD}
     ,#{POST_TYPE}    
     ,#{ERR_CD, mode=OUT, jdbcType=INTEGER}

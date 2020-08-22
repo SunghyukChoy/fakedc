@@ -130,16 +130,24 @@ public class PostController {
   @GetMapping("/update/{postId}")
   public ModelAndView update(@PathVariable long postId, HttpSession session) {
     logger.info("받은 postId : " + postId);
+    ModelAndView mv = new ModelAndView();
 
     if (session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY) == null) {
-      ModelAndView mv = new ModelAndView("member/request_login");
+      mv.setViewName("member/request_login");
       return mv;
     }
 
+    // TODO : postVO.create_user와 loginMember.MEM_ID와 비교
+    // 다르면 다른 페이지로 돌림(이전 페이지, 아예 수정 화면을 띄우지 않음)
     PostVO postVO = postService.detail(postId);
 
-    ModelAndView mv = new ModelAndView("post/update");
+    if (postVO == null) {
+      mv.setViewName("common/back");
+      mv.addObject("alertMessage", "해당 게시글이 존재하지 않습니다.");
+      return mv;
+    }
 
+    mv.setViewName("post/update");
     mv.addObject("vo", postVO);
 
     return mv;
@@ -158,10 +166,10 @@ public class PostController {
 
     LoginMemberDTO logimMember = (LoginMemberDTO) session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY);
 
-    PostAuthCheckDTO postAuthCheckDTO = new PostAuthCheckDTO(updatePostDTO.getPOST_ID(), logimMember.getMEM_ID());
-    // postAuthCheckDTO : 수정하려는 게시물의 POST_ID와 현재 로그인한 멤버의 MEM_ID를 담은 객체
+    // 로그인한 글쓴이의 사용자 정보를 세팅한다
+    updatePostDTO.setMEM_ID(logimMember.getMEM_ID());
 
-    PostVO updatedPost = postService.update(postAuthCheckDTO, updatePostDTO);
+    PostVO updatedPost = postService.update(updatePostDTO);
 
     logger.info("PostController.updateProcess() 업데이트 PostVO : " + updatedPost);
 

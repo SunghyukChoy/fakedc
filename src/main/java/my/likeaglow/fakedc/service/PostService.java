@@ -85,17 +85,8 @@ public class PostService {
    * @param memberId
    * @return
    */
-  public PostVO update(PostAuthCheckDTO postAuthCheckDTO, UpdatePostDTO updatePostDTO) {
+  public PostVO update(UpdatePostDTO updatePostDTO) {
     logger.info("PostService.updatePost() 시작");
-
-    postRepository.authCheck(postAuthCheckDTO);
-    logger.info("인증 후 postAuthCheckDTO ERR_CD : " + postAuthCheckDTO.getERR_CD());
-
-    if (!postAuthCheckDTO.isSuccessCall()) {
-      // 디비에서 수정하려는 게시물의 POST_ID로 조회하여 그 게시물의 CREATE_USER가 현재 로그인한 MEM_ID와 같은지 확인
-      // 본인 게시글임이 확인되지 않는다면 여기서 리턴됨.
-      return null;
-    }
 
     PostVO updatedPost = postRepository.updatePost(updatePostDTO);
 

@@ -135,7 +135,7 @@ public class MemberController {
     LoginMemberDTO loginVO = memberService.login(authCheckDTO, session);
     // session은 JSP의 내장 객체로 직접 생성하지 않아도 사용할 수 있다.
 
-    if (!authCheckDTO.isLoginSuccess()) { // 로그인 실패 시
+    if (loginVO == null) { // 로그인 실패 시
       ModelAndView mv = new ModelAndView("member/login"); // member/login 페이지로 보냄
       authCheckDTO.setMEM_PASSWORD(""); // 입력한 비밀번호 제거
 
