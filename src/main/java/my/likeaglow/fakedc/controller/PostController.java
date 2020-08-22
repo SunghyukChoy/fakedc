@@ -1,7 +1,5 @@
 package my.likeaglow.fakedc.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import my.likeaglow.fakedc.common.GlobalVariable;
 import my.likeaglow.fakedc.model.DeletePostDTO;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
 import my.likeaglow.fakedc.model.PostAuthCheckDTO;
@@ -24,7 +21,7 @@ import my.likeaglow.fakedc.service.PostService;
 
 @Controller
 @RequestMapping("/post")
-public class PostController {
+public class PostController extends BaseController {
 
   private static final Logger logger = LoggerFactory.getLogger(PostController.class);
 
@@ -37,16 +34,16 @@ public class PostController {
    * @return
    */
   @GetMapping("/write/{boardId}")
-  public ModelAndView write(HttpSession session, @PathVariable String boardId) {
+  public ModelAndView write(@PathVariable String boardId) {
 
-    if (session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY) == null) {
+    if (!hasLoginMember()) {
       ModelAndView mv = new ModelAndView("member/request_login");
       return mv;
     }
 
-    LoginMemberDTO loginMember = (LoginMemberDTO) session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY);
-
     ModelAndView mv = new ModelAndView("post/write");
+
+    LoginMemberDTO loginMember = getLoginMember();
 
     setTestPost(mv, loginMember, boardId);
 
@@ -128,11 +125,11 @@ public class PostController {
    * @return
    */
   @GetMapping("/update/{postId}")
-  public ModelAndView update(@PathVariable long postId, HttpSession session) {
+  public ModelAndView update(@PathVariable long postId) {
     logger.info("받은 postId : " + postId);
     ModelAndView mv = new ModelAndView();
 
-    if (session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY) == null) {
+    if (!hasLoginMember()) {
       mv.setViewName("member/request_login");
       return mv;
     }
@@ -161,10 +158,10 @@ public class PostController {
    * @return
    */
   @PostMapping("/update")
-  public ModelAndView updateProcess(UpdatePostDTO updatePostDTO, HttpSession session) {
+  public ModelAndView updateProcess(UpdatePostDTO updatePostDTO) {
     logger.info("받은 updatePostDTO : " + updatePostDTO);
 
-    LoginMemberDTO logimMember = (LoginMemberDTO) session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY);
+    LoginMemberDTO logimMember = getLoginMember();
 
     // 로그인한 글쓴이의 사용자 정보를 세팅한다
     updatePostDTO.setMEM_ID(logimMember.getMEM_ID());
@@ -193,12 +190,10 @@ public class PostController {
    * @param boardId
    * @param postId
    * @param deletePostDTO
-   * @param session
    * @return
    */
   @GetMapping("/delete/{boardId}/{postId}") // @PathVariable로 매개변수 여러 개 받을 수 있음.
-  public ModelAndView delete(@PathVariable String boardId, @PathVariable long postId, DeletePostDTO deletePostDTO,
-      HttpSession session) {
+  public ModelAndView delete(@PathVariable String boardId, @PathVariable long postId, DeletePostDTO deletePostDTO) {
 
     logger.info("받은 postId : " + postId);
     logger.info("받은 boardId : " + boardId);
@@ -208,12 +203,12 @@ public class PostController {
     // postId : 삭제하려는 게시물의 POST_ID
     logger.info("deletePostDTO : " + deletePostDTO);
 
-    if (session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY) == null) {
+    if (!hasLoginMember()) {
       ModelAndView mv = new ModelAndView("member/request_login");
       return mv;
     }
 
-    LoginMemberDTO logimMember = (LoginMemberDTO) session.getAttribute(GlobalVariable.LOGINMEMBERDTO_SESSION_KEY);
+    LoginMemberDTO logimMember = getLoginMember();
 
     PostAuthCheckDTO postAuthCheckDTO = new PostAuthCheckDTO(postId, logimMember.getMEM_ID());
     // postAuthCheckDTO : 삭제하려는 게시물의 POST_ID와 현재 로그인한 멤버의 MEM_ID를 담은 객체

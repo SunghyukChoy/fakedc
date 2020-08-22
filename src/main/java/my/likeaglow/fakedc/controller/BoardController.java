@@ -17,7 +17,7 @@ import my.likeaglow.fakedc.service.PostService;
 
 @Controller
 @RequestMapping("/board")
-public class BoardController {
+public class BoardController extends BaseController {
 
   private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
