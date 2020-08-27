@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import my.likeaglow.fakedc.model.DeletePostDTO;
-import my.likeaglow.fakedc.model.PostAuthCheckDTO;
 import my.likeaglow.fakedc.model.PostListDTO;
 import my.likeaglow.fakedc.model.PostVO;
 import my.likeaglow.fakedc.model.PostViewCountDTO;
@@ -105,17 +104,14 @@ public class PostService {
    * @param deletePostDTO
    * @return
    */
-  public String delete(PostAuthCheckDTO postAuthCheckDTO, DeletePostDTO deletePostDTO) {
+  public String delete(DeletePostDTO deletePostDTO) {
     logger.info("PostService.deletePost() 시작");
 
-    postRepository.authCheck(postAuthCheckDTO);
-    if (!postAuthCheckDTO.isSuccessCall()) {
-      // 디비에서 삭제하려는 게시물의 POST_ID로 조회하여 그 게시물의 CREATE_USER가 현재 로그인한 MEM_ID와 같은지 확인
-      // 본인 게시글임이 확인되지 않는다면 여기서 리턴됨.
+    postRepository.deletePost(deletePostDTO);
+
+    if (!deletePostDTO.isSuccessCall()) {
       return null;
     }
-
-    postRepository.deletePost(deletePostDTO);
 
     return "";
   }

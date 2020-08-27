@@ -1,7 +1,5 @@
 package my.likeaglow.fakedc.controller;
 
-import java.io.UnsupportedEncodingException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,18 +88,20 @@ public class MemberController extends BaseController {
     // registerVO에 담긴 값을 찍어내는 로거. RegisterVO 클래스에 @ToString 어노테이션 붙여줘서 가능.
 
     return new ModelAndView("redirect:/member/login");
-    // 회운가입 성공 시 /member/login.jsp 페이지로 이동
+
   }
 
   /**
    * 회원 로그인 페이지
    * 
    * @return 로그인 페이지 호출
-   * @throws UnsupportedEncodingException
    */
   @GetMapping("/login")
   public ModelAndView login() {
     // TODO 1번: mv 만들어서 테스트용 AuthCheckVO 객체를 만들어서 모델로 삽입하여 view에서 사용하도록 함
+
+    logger.info("MemberController.login() GET 메서드 시작");
+    // logger.info("returnUrl : " + returnUrl);
     ModelAndView mv = new ModelAndView("member/login");
 
     setTestLogin(mv);
@@ -129,26 +129,36 @@ public class MemberController extends BaseController {
    */
   @PostMapping("/login")
   public ModelAndView loginProcess(AuthCheckDTO authCheckDTO, String returnUrl) {
-    // TODO 3번 : 아래 로깅을 통해서 AuthCkeckVO의 필드값을 체크하기 위해 AuthCheckVO 에 적절한 어노테이션 삽입, 아래
-    // 코드는 수정하지 말 것
+    // form 태그에서 전송 시 form 태그 안의 값뿐만 아니라 url의 파라미터 또한 받을 수 있음.
+    // get 메서드 -> 뷰페이지 -> post 메서드 이동 간에 url은 변하지 않음. (forward와 redirect 알아볼 것)
+    // 인코딩된 문자열은 스프링에서 자동으로 디코딩하여 저장됨.
+
+    logger.info("MemberController.login() POST 메서드 시작");
+    logger.info("returnUrl : " + returnUrl);
+
     logger.debug("로그인 객체 로그 : " + authCheckDTO);
     // authCheckVO에는 사용자로부터 입력받은 MEM_ID, MEM_PASSWORD가 들어가 있음.
 
     LoginMemberDTO loginVO = memberService.login(authCheckDTO, getHttpSession());
     // session은 JSP의 내장 객체로 직접 생성하지 않아도 사용할 수 있다.
+    // 08.22 수정 :
+    // 상속받은 BaseController에 정의되어 있는 getHttpSession() 메서드로 HttpSession 객체를 생성함.
+    // 생성한 HttpSession 객체를 MemberSerivce 클래스의 login() 메서드에 매개변수로 넘겨줌.
 
-    if (loginVO == null) { // 로그인 실패 시
+    if (loginVO == null) { // login() 메서드의 유효성 검사에서 return null을 하여 loginVO에 null이 담긴 경우.
       ModelAndView mv = new ModelAndView("member/login"); // member/login 페이지로 보냄
       authCheckDTO.setMEM_PASSWORD(""); // 입력한 비밀번호 제거
 
       mv.addObject("vo", authCheckDTO);
       // "vo"를 key로 하고("vo"는 기존에 있던 키. view 페이지에서 이 key로 접근하므로 똑같이 맞춰줌.)
       // 비밀번호가 제거된 authCheckVO를 value로 해서 mv에 저장
-      mv.addObject("returnUrl", returnUrl);
+
+      // mv.addObject("returnUrl", returnUrl);
       return mv;
     }
 
     if (returnUrl != null && !returnUrl.equals("")) {
+      // null과 ""은 다름. null이 아니고 ""도 아닌 조건을 모두 만족 == returnUrl에 값이 있음
       return new ModelAndView("redirect:" + returnUrl);
     }
 

@@ -47,20 +47,14 @@
 			<label>제목</label>
       <input type="text" name="POST_TITLE" value="${ vo.POST_TITLE }" />
 		</div>
-		<%-- <div>
-			<label>글쓴이</label>
-      <input type="text" name="CREATE_USER" value="${ vo.CREATE_USER }" />
-		</div> --%>
+		
     <c:choose>
     <c:when test="${ vo.CREATE_USER != null }">
       <label>글쓴이</label>
       <input type="hidden" name="CREATE_USER" value="${ vo.CREATE_USER }" />
+      <%-- <input type="hidden" name="CREATE_USER" value="${ vo.CREATE_USER }" /> --%>
       <span>${ vo.CREATE_USER }</span>
-    </c:when>
-    <%-- <c:otherwise>
-      <label>글쓴이</label>
-      <input type="text" name="CREATE_USER" value="${ vo.CREATE_USER }" />
-    </c:otherwise> --%>
+    </c:when>    
   </c:choose>
     
 		<div>

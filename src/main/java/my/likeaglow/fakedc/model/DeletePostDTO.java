@@ -14,5 +14,6 @@ import lombok.ToString;
 public class DeletePostDTO extends ProcedureResultDTO {
 
   private long POST_ID;
+  private String MEM_ID;
 
 }

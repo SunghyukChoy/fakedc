@@ -10,8 +10,10 @@
   <c:if test="${ alertMessage != null }">
     alert('${ alertMessage }');
   </c:if>
-
+  /* Controller에서 mv 객체에 "alertMessage"를 key로 하여 value에 띄울 메세지를 담음 */
+	/* 알림팡으로 바로 메세지를 보여주고 */
   history.back(-1);
+  /* 뒤로 가기 */
 </script>
 </head>
 </html>

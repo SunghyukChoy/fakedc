@@ -97,6 +97,8 @@ button.confirm {
   <div class="container">
 
     <form class="form-login" method="post">
+    <%-- <form class="form-login" method="get" action=".."> --%>
+    <%-- get 방식의 메서드로 전송할 땐 URL에 노출이 되어 key=value의 형태로 담아서 전송됨. --%>
     
       <h1>DCINSIDE 로그인</h1>
       <hr style="margin: 20px 0px; border: 1px solid #eee;" />

@@ -7,12 +7,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -136,6 +139,22 @@ public class HomeController extends BaseController {
 
     logger.info(String.valueOf(ChronoUnit.MINUTES.between(ct2, ct)));
 
+  }
+
+  @GetMapping(value = "/test6")
+  public void test6(HttpServletRequest request) {
+    logger.info("Context path : " + request.getContextPath());
+    // context path 구하기
+  }
+
+  @GetMapping(value = "/test7")
+  public String test7Get() {
+    return "error/test";
+  }
+
+  @PostMapping(value = "/test7")
+  public void test7Post(int age) {
+    logger.info("age : " + age);
   }
 
 }
