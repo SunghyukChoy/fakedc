@@ -11,6 +11,7 @@ import my.likeaglow.fakedc.model.DeletePostDTO;
 import my.likeaglow.fakedc.model.PostListDTO;
 import my.likeaglow.fakedc.model.PostVO;
 import my.likeaglow.fakedc.model.PostViewCountDTO;
+import my.likeaglow.fakedc.model.RecommendPostDTO;
 import my.likeaglow.fakedc.model.UpdatePostDTO;
 import my.likeaglow.fakedc.model.writePostDTO;
 import my.likeaglow.fakedc.repository.PostRepository;
@@ -126,6 +127,26 @@ public class PostService {
     postRepository.increaseViewCount(postViewCountDTO);
 
     if (!postViewCountDTO.isSuccessCall()) {
+      return null;
+    }
+
+    return "";
+  }
+
+  /**
+   * 게시물 추천/비추천
+   * 
+   * @param recommendPostDTO
+   */
+  public String recommend(RecommendPostDTO recommendPostDTO) {
+
+    if (!(recommendPostDTO.getIS_UNRECOMMEND() == 0) && !(recommendPostDTO.getIS_UNRECOMMEND() == 1)) {
+      return null;
+    }
+
+    postRepository.updateRecommend(recommendPostDTO);
+
+    if (!recommendPostDTO.isSuccessCall()) {
       return null;
     }
 

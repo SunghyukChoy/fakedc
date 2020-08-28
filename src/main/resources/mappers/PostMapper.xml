@@ -81,4 +81,15 @@
     ,#{ERR_MSG, mode=OUT, jdbcType=VARCHAR}) }
   </select>
   
+  <!-- 게시글 추천/비추천 -->
+  <select id="updateRecommend"
+    parameterType="my.likeaglow.fakedc.model.RecommendPostDTO"        
+    statementType="CALLABLE">
+    { call PST_un_Recommend (
+     #{POST_ID}
+    ,#{IS_UNRECOMMEND}
+    ,#{ERR_CD, mode=OUT, jdbcType=INTEGER}
+    ,#{ERR_MSG, mode=OUT, jdbcType=VARCHAR}) }
+  </select>
+  
 </mapper>

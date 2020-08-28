@@ -17,6 +17,7 @@ import my.likeaglow.fakedc.model.DeletePostDTO;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
 import my.likeaglow.fakedc.model.PostVO;
 import my.likeaglow.fakedc.model.PostViewCountDTO;
+import my.likeaglow.fakedc.model.RecommendPostDTO;
 import my.likeaglow.fakedc.model.UpdatePostDTO;
 import my.likeaglow.fakedc.model.writePostDTO;
 import my.likeaglow.fakedc.service.PostService;
@@ -268,6 +269,39 @@ public class PostController extends BaseController {
     // 게시물 삭제 후 게시물 목록으로 이동
     return mv;
 
+  }
+
+  /**
+   * 게시글 추천/비추천
+   * 
+   * @param postId
+   * @param unrecommend
+   * @return
+   * @throws UnsupportedEncodingException
+   */
+  @GetMapping("/recommend/{postId}/{unrecommend}")
+  public ModelAndView recommend(@PathVariable long postId, @PathVariable int unrecommend)
+      throws UnsupportedEncodingException {
+    logger.info("PostController.recommdend() 시작");
+
+    ModelAndView mv = new ModelAndView();
+    if (!hasLoginMember()) {
+      mv.setViewName("redirect:/member/login?returnUrl=" + URLEncoder.encode("/post/" + postId, "UTF-8"));
+      return mv;
+    }
+
+    RecommendPostDTO recommendPostDTO = new RecommendPostDTO(postId, unrecommend);
+    String result = postService.recommend(recommendPostDTO);
+    if (result == null) {
+      mv.setViewName("common/back");
+      if (unrecommend == 0) {
+        mv.addObject("alertMessage", "게시물을 추천할 수 없습니다.");
+      } else {
+        mv.addObject("alertMessage", "게시물을 비추천할 수 없습니다.");
+      }
+      return mv;
+    }
+    return new ModelAndView("redirect:/post/" + postId);
   }
 
 }

@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecommendPostDTO {
+public class RecommendPostDTO extends ProcedureResultDTO {
 
   private long POST_ID;
   private int IS_UNRECOMMEND; // 0 : 추천. 1 : 비추천.

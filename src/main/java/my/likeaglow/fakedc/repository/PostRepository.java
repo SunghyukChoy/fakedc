@@ -9,6 +9,7 @@ import my.likeaglow.fakedc.model.PostAuthCheckDTO;
 import my.likeaglow.fakedc.model.PostListDTO;
 import my.likeaglow.fakedc.model.PostVO;
 import my.likeaglow.fakedc.model.PostViewCountDTO;
+import my.likeaglow.fakedc.model.RecommendPostDTO;
 import my.likeaglow.fakedc.model.UpdatePostDTO;
 import my.likeaglow.fakedc.model.writePostDTO;
 
@@ -36,4 +37,7 @@ public interface PostRepository {
 
   // 글 조회수 증가
   public void increaseViewCount(PostViewCountDTO postViewCountDTO);
+
+  // 글 추천/비추천
+  public void updateRecommend(RecommendPostDTO recommendPostDTO);
 }

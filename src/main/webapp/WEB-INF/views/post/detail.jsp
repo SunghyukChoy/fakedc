@@ -140,8 +140,8 @@ button.confirm {
   <a href="..">메인페이지</a>
   <a href="update/${ vo.POST_ID }"><button type="button">게시글 수정</button></a>
   <a href="delete/${ vo.BOARD_ID }/${ vo.POST_ID }"><button type="button">게시글 삭제</button></a>
-  <a href="recommendPost"><button type="button">추천</button></a>
-  <a href="unrecommendPost"><button type="button">비추천</button></a>
+  <a href="recommend/${ vo.POST_ID }/0"><button type="button">추천</button></a>
+  <a href="recommend/${ vo.POST_ID }/1"><button type="button">비추천</button></a>
   <a href="../board/${ vo.BOARD_ID }"><button type="button">게시판으로</button></a>
   <%-- <a href="컨트롤러 메서드 매핑명"></a> --%>
   
