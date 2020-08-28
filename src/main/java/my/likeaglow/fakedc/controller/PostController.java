@@ -290,15 +290,18 @@ public class PostController extends BaseController {
       return mv;
     }
 
-    RecommendPostDTO recommendPostDTO = new RecommendPostDTO(postId, unrecommend);
-    String result = postService.recommend(recommendPostDTO);
-    if (result == null) {
+    LoginMemberDTO loginMember = getLoginMember();
+
+    RecommendPostDTO recommendPostDTO = new RecommendPostDTO(postId, loginMember.getMEM_ID(), unrecommend);
+    int result = postService.recommend(recommendPostDTO);
+
+    if (result == -1) {
       mv.setViewName("common/back");
-      if (unrecommend == 0) {
-        mv.addObject("alertMessage", "게시물을 추천할 수 없습니다.");
-      } else {
-        mv.addObject("alertMessage", "게시물을 비추천할 수 없습니다.");
-      }
+      mv.addObject("alertMessage", "게시물이 존재하지 않습니다.");
+      return mv;
+    } else if (result == -2) {
+      mv.setViewName("common/back");
+      mv.addObject("alertMessage", "이미 추천 또는 비추천 한 게시글입니다.");
       return mv;
     }
     return new ModelAndView("redirect:/post/" + postId);

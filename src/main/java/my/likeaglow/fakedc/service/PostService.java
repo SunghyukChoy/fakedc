@@ -138,18 +138,18 @@ public class PostService {
    * 
    * @param recommendPostDTO
    */
-  public String recommend(RecommendPostDTO recommendPostDTO) {
+  public int recommend(RecommendPostDTO recommendPostDTO) {
 
     if (!(recommendPostDTO.getIS_UNRECOMMEND() == 0) && !(recommendPostDTO.getIS_UNRECOMMEND() == 1)) {
-      return null;
+      return 0;
     }
 
     postRepository.updateRecommend(recommendPostDTO);
 
-    if (!recommendPostDTO.isSuccessCall()) {
-      return null;
-    }
+    /*
+     * if (!recommendPostDTO.isSuccessCall()) { return null; }
+     */
 
-    return "";
+    return (int) recommendPostDTO.getERR_CD();
   }
 }
