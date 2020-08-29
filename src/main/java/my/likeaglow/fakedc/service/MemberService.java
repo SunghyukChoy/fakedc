@@ -29,12 +29,13 @@ public class MemberService {
    * 
    * @param registerDTO 회원정보
    * @return 성공시 MEM_ID 반환, 실패시 null 반환
+   * @throws IllegalArgumentException VO객체가 유효하지 않음
    */
-  public String register(RegisterDTO registerDTO) {
+  public String register(RegisterDTO registerDTO) throws IllegalArgumentException {
 
     if (registerDTO.isInvalidDTO()) {
       logger.info("MemberService.register return 값 : null");
-      return null;
+      throw new IllegalArgumentException();
     }
 
     logger.info("받은 registerVO : " + registerDTO);

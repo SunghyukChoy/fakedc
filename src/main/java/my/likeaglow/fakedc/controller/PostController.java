@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import my.likeaglow.fakedc.common.exceptions.NotFoundVOException;
 import my.likeaglow.fakedc.model.DeletePostDTO;
 import my.likeaglow.fakedc.model.LoginMemberDTO;
 import my.likeaglow.fakedc.model.PostVO;
@@ -258,8 +259,10 @@ public class PostController extends BaseController {
     // postId : 삭제하려는 게시물의 POST_ID
     deletePostDTO.setMEM_ID(loginMember.getMEM_ID());
 
-    String result = postService.delete(deletePostDTO);
-    if (result == null) {
+    String result;
+    try {
+      result = postService.delete(deletePostDTO);
+    } catch (NotFoundVOException e) {
       ModelAndView mv = new ModelAndView("common/back");
       mv.addObject("alertMessage", "게시물을 삭제할 수 없습니다.");
       return mv;

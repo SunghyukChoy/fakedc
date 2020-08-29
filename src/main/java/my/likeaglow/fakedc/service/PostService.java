@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import my.likeaglow.fakedc.common.exceptions.NotFoundVOException;
 import my.likeaglow.fakedc.model.DeletePostDTO;
 import my.likeaglow.fakedc.model.PostListDTO;
 import my.likeaglow.fakedc.model.PostVO;
@@ -99,19 +100,19 @@ public class PostService {
   }
 
   /**
-   * 게시물 삭제
+   * 게시물 삭제 만약에 게시글 삭제가 실패하면 null 을 반환한다
    * 
    * @param postAuthCheckDTO
    * @param deletePostDTO
    * @return
    */
-  public String delete(DeletePostDTO deletePostDTO) {
+  public String delete(DeletePostDTO deletePostDTO) throws NotFoundVOException {
     logger.info("PostService.deletePost() 시작");
 
     postRepository.deletePost(deletePostDTO);
 
     if (!deletePostDTO.isSuccessCall()) {
-      return null;
+      throw new NotFoundVOException("해당 글이 존재하지 않습니다.");
     }
 
     return "";
