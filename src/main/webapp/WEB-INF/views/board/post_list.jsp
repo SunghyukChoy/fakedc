@@ -92,7 +92,7 @@
 <body>   
    
   <div class="container">
-   
+   <a href="/member/logout">로그아웃</a>
    <div class="board">
       <table class="table">
         <thead class="thead-light">
@@ -113,7 +113,7 @@
           <tr>          
             <th>${ post.POST_ID }</th>
             <td>${ (post.POST_TYPE == 1 ? "일반" : "공지")}</td>           
-            <td><a href="../post/${ post.POST_ID }">${ post.POST_TITLE }</a></td>
+            <td><a href="/../post/${ post.POST_ID }">${ post.POST_TITLE }</a></td>
             <td>${ post.CREATE_USER }</td>
             <td>${ JspViewHelper.getTimeDifference(post.CREATE_DATE) }</td>
             <td>${ post.VIEW_COUNT }</td>
@@ -126,8 +126,8 @@
       </table>
       </div>
       
-      <a href="..">메인 페이지</a>
-      <a href="../post/write/${ boardId }">글쓰기</a>
+      <a href="/..">메인 페이지</a>
+      <a href="/../post/write/${ boardId }">글쓰기</a>
   </div>
   
 </body>

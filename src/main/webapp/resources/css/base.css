@@ -1,0 +1,285 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Russo+One&display=swap');
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* base.css 시작 */
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+body {
+  min-width: 1400px;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+main.container {
+  margin: 0px 120px;
+  min-height: 280px;
+}
+
+header {
+  background-color: #222;
+  color: #ffffff;
+  height: 42px;
+  line-height: 39px;
+}
+
+header .header-left {
+  width: 30%;
+  margin: 0px 10%;
+  float:left;
+}
+
+header .header-right {
+  width: 30%;
+  margin: 0px 10%;
+  text-align: right;
+  float: right;
+}
+
+header a {
+  color : #ffffff;
+}
+
+header li {
+  padding: 0 20px;
+  display: inline;    
+}
+
+nav {
+  height: auto;
+}
+
+nav h2 {
+  text-align: center;
+  font-size: 35px;
+  padding: 15px 0;
+  font-weight: bolder;
+  font-family: 'Russo One', sans-serif;
+}
+
+nav ul {
+  text-align: center;
+  padding: 10px;
+}
+
+nav li {
+  padding: 0 20px;
+  display: inline;  
+}
+
+nav li a {
+  color: #333;
+  font-weight: bold;
+}
+
+.main-slider {
+  background-color: #bbb;
+  height: 350px;
+}
+
+.best-picks {
+  background-color: #ddd; /* 임시 배경색. 삭제 예정 */
+  height: 400px;
+}
+
+footer {
+  background-color: #222;
+  color: #ffffff;
+  /* height: 190px; */
+}
+
+footer a {
+  color: #ffffff;  
+}
+
+footer > .footer_top {
+  padding: 0px 100px;
+  height: 60px;
+  border-bottom: 1px solid #aaa;
+}
+
+footer > .footer_top > * {
+  line-height: 60px;
+}
+
+footer .footer_nav {
+  float: left;
+  padding: 0 10px;
+  width: 70%; 
+}
+
+footer .sns {
+  float: right;
+  padding: 0 10px;
+  width: 20%;  
+  text-align: right;
+}
+
+footer .sns a {
+  font-size: 150%;
+}
+
+footer li{  
+  padding: 0 10px;
+  display: inline;
+}
+
+.footer_bottom {
+  padding: 0 120px 20px 120px;
+}
+
+.footer_logo > h1 {
+  
+  font-size: 20px;
+  padding: 15px 0;
+  font-weight: bolder;
+  font-family: 'Russo One', sans-serif;
+}
+
+.footer_info p {
+  color: #999;
+  line-height: 160%;
+}
+
+
+
+/* base.css 끝 */
+
+
+

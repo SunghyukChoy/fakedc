@@ -1,6 +1,3 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-  pageEncoding="UTF-8" session="false"%>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -12,9 +9,10 @@
   <link rel="stylesheet" href="/https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-  <link href="/resources/css/base.css" rel="stylesheet" />
+  <link href="/css/base.css" rel="stylesheet" />
+  <link href="/css/login.css" rel="stylesheet" />
 
-  <!-- <script src="js/common.js"></script> -->
+  <script src="js/common.js"></script>
 </head>
 
 <body>
@@ -24,26 +22,14 @@
   <!-- 탑 요소 시작 -->
   <header>
     <div class="header-left">
-      <c:choose>
-        <c:when test="${ member != null }">
-          <span>${ member.MEM_NAME } 님 환영합니다!</span>
-        </c:when>
-        <c:otherwise>
-          <span>FakeDC에 오신 것을 환영합니다.</span>
-        </c:otherwise>
-      </c:choose>
+      <span>FakeDC에 오신 것을 환영합니다.</span>
+      <!-- <span>최성혁 님 환영합니다!</span> -->
     </div>
     <div class="header-right">
       <ul class="member-command">
-        <c:choose>
-          <c:when test="${ member != null }">
-            <li><a href="/member/logout">로그아웃</a></li>
-          </c:when>
-          <c:otherwise>
-            <li><a href="/member/login">로그인</a></li>
-            <li><a href="/member/register">회원가입</a></li>
-          </c:otherwise>
-        </c:choose>
+        <li><a href="/#">로그인</a></li>
+        <li><a href="/#">회원가입</a></li>
+        <!-- <li><a href="/#">로그아웃</a></li> -->
       </ul>
     </div>
   </header>
@@ -53,27 +39,33 @@
   <nav>
     <h2>FakeDC</h2>
     <ul class="galleries">
-      <li><a href="/board/pop">해외음악 갤러리</a></li>
-      <li><a href="/board/major-football">해외축구 갤러리</a></li>
-      <li><a href="/board/assassin-creed">어쌔신크리드 갤러리</a></li>
-      <li><a href="/board/kpop-girlfriend">걸그룹 여자친구 갤러리</a></li>
-      <li><a href="/board/wagal-dish">와갤요리 갤러리</a></li>
+      <li><a href="/#">해외음악 갤러리</a></li>
+      <li><a href="/#">해외축구 갤러리</a></li>
+      <li><a href="/#">어쌔신크리드 갤러리</a></li>
+      <li><a href="/#">걸그룹 여자친구 갤러리</a></li>
+      <li><a href="/#">와갤요리 갤러리</a></li>
     </ul>
   </nav>
   <!-- 메뉴 끝 -->
 
   <main class="container">
-    <!-- 메인 슬라이드 영역 시작 -->
-    <div class="main-slider">
-      <!-- 갤러리를 만들 때 메인배너용 갤러리 이미지를 추가하게 하고 이 영역에 이 갤러리 내에 6시간 이내 작성된 게시물 중에서 조회수가 가장 많은순으로 3건을 표시 -->
-    </div>
-    <!-- 메인 슬라이드 영역 끝 -->
+   
+    <form class="form-login" method="post">
 
-    <!-- best pick 시작 -->
-    <div class="best-picks">
-      <!-- 이 영역은 존재하는 모든 갤러리중에서 1일동안 등록된 글중에서 추천이 가장 많은 6개만 표시할 것 -->
-    </div>
-    <!-- best pick 끝 -->
+      <div class="form-control">
+        <input type="text" name="MEM_ID" placeholder="아이디" />
+      </div>
+      <div class="form-control">
+        <input type="password" name="MEM_PASSWORD" placeholder="비밀번호" />
+      </div>
+
+      <div class="form-button-group">
+        <button type="submit" class="confirm">로그인</button>
+        <button type="button" class="register">회원가입</button>
+      </div>
+
+
+    </form>
   </main>
 
   <!-- 푸터 영역 시작 -->

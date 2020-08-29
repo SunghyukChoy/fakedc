@@ -100,6 +100,10 @@ public class MemberController extends BaseController {
   public ModelAndView login() {
     // TODO 1번: mv 만들어서 테스트용 AuthCheckVO 객체를 만들어서 모델로 삽입하여 view에서 사용하도록 함
 
+    if (hasLoginMember()) {
+      return goBack("이미 로그인이 되어있습니다.");
+    }
+
     logger.info("MemberController.login() GET 메서드 시작");
     // logger.info("returnUrl : " + returnUrl);
     ModelAndView mv = new ModelAndView("member/login");

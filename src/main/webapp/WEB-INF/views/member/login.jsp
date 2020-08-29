@@ -1,121 +1,124 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="ko">
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>로그인</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fake DC - Main</title>
 
-<style>
-html {
-  font-size: 20px;
-}
+  <link rel="stylesheet" href="/https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  <link href="/resources/css/base.css" rel="stylesheet" />
+  <link href="/resources/css/login.css" rel="stylesheet" />
 
-h1 {
-  margin-top: 15px;
-  margin-bottom: 15px;
-  font-size: 2rem;
-}
-
-form input {
-  font-size: 1rem;
-}
-
-input[type="text"], input[type="password"], input[type="email"] {
-  padding: 0.2rem;
-}
-
-.container {
-  width: 850px;
-}
-
-form.form-register {
-  margin: auto;
-  width: 700px;
-}
-
-.form-control {
-  clear: both;
-  height: 2rem;
-}
-
-.form-control>label {
-  width: 30%;
-  float: left;
-  display: block;
-}
-
-.form-control>label+* {
-  width: 70%;
-  display: block;
-  float: right;
-}
-
-.form-button-group {
-  display: flex;
-  justify-content: center;
-}
-
-.form-button-group>button {
-  margin: 10px 1rem;
-  padding: 0.5rem;
-  font-size: 1.1rem;
-  color: #fff;
-  background-color: #7f5b5b;
-  border: 0px;
-  border-radius: 5px;
-}
-
-button.danger {
-  background-color: #f66464 !important;
-}
-
-button.confirm {
-  background-color: #c341b9;
-}
-</style>
+  <script src="js/common.js"></script>
 </head>
+
 <body>
+  <!-- 1. 레이아웃 -->
+  <!-- 2. 개별 요소들의 스타일 -->
 
-  <!--
-        // TODO 2번 
-        1. form 태그 생성, 요청은 MemberController.loginProcess 메서드를 실행할 수 있도록 action, method 지정
-        2. 내부에 input 2개, submit 타입 버튼 만들고 다음 조건을 만족해야 함
-            - 로그인 ID : input 태그, text 타입
-            - 비밀번호 : input 태그, password 타입
-            - 로그인 버튼 : submit 타입
-        3. 전송했을 때 loginProcess에서 처리할 수 있도록 올바른 값을 넘겨야 함
-        4. 디자인은 크게 상관없음
-     -->
+  <!-- 탑 요소 시작 -->
+  <header>
+    <div class="header-left">
+      <c:choose>
+        <c:when test="${ member != null }">
+          <span>${ member.MEM_NAME } 님 환영합니다!</span>
+        </c:when>
+        <c:otherwise>
+          <span>FakeDC에 오신 것을 환영합니다.</span>
+        </c:otherwise>
+      </c:choose>
+    </div>
+    <div class="header-right">
+      <ul class="member-command">
+        <c:choose>
+          <c:when test="${ member != null }">
+            <li><a href="/member/logout">로그아웃</a></li>
+          </c:when>
+          <c:otherwise>
+            <li><a href="/member/login">로그인</a></li>
+            <li><a href="/member/register">회원가입</a></li>
+          </c:otherwise>
+        </c:choose>
+      </ul>
+    </div>
+  </header>
+  <!-- 탑 요소 끝 -->
 
-  <div class="container">
+  <!-- 메뉴 시작 -->
+  <nav>
+    <h2>FakeDC</h2>
+    <ul class="galleries">
+      <li><a href="/board/pop">해외음악 갤러리</a></li>
+      <li><a href="/board/major-football">해외축구 갤러리</a></li>
+      <li><a href="/board/assassin-creed">어쌔신크리드 갤러리</a></li>
+      <li><a href="/board/kpop-girlfriend">걸그룹 여자친구 갤러리</a></li>
+      <li><a href="/board/wagal-dish">와갤요리 갤러리</a></li>
+    </ul>
+  </nav>
+  <!-- 메뉴 끝 -->
 
+  <main class="container">
+   
     <form class="form-login" method="post">
-    <%-- <form class="form-login" method="get" action=".."> --%>
-    <%-- get 방식의 메서드로 전송할 땐 URL에 노출이 되어 key=value의 형태로 담아서 전송됨. --%>
-    
-      <h1>DCINSIDE 로그인</h1>
-      <hr style="margin: 20px 0px; border: 1px solid #eee;" />
+
       <div class="form-control">
-        <label>아이디</label> <input type="text" name="MEM_ID"
-          value="${ vo.MEM_ID }" />
+        <input type="text" name="MEM_ID" placeholder="아이디" value="${ vo.MEM_ID }" />
       </div>
       <div class="form-control">
-        <label>비밀번호</label> <input type="password" name="MEM_PASSWORD"
-          value="${ vo.MEM_PASSWORD }" />
+        <input type="password" name="MEM_PASSWORD" placeholder="비밀번호" value="${ vo.MEM_PASSWORD }" />
       </div>
+
       <div class="form-button-group">
         <button type="submit" class="confirm">로그인</button>
-        <button type="reset" class="danger">정보 다시쓰기</button>
+        <button type="button" class="register">회원가입</button>
       </div>
-    </form>
 
-  </div>
+
+    </form>
+  </main>
+
+  <!-- 푸터 영역 시작 -->
+  <footer>
+    <div class="footer_top">
+      <ul class="footer_nav">
+        <li><a href="/#">소개</a></li>
+        <li><a href="/#">고객센터</a></li>
+        <li><a href="/#">FAQ</a></li>
+        <li><a href="/#">이용약관</a></li>
+        <li><a href="/#">개인정보처리방침</a></li>
+        <li><a href="/#">청소년 보호정책</a></li>
+        <li><a href="/#">제휴/광고 문의</a></li>
+        <li><a href="/#">메인 바로가기</a></li>
+      </ul>
+
+      <ul class="sns">
+
+        <li><a href="/#"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></li>
+        <li><a href="/#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+        <li><a href="/#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="footer_bottom">
+      <div class="footer_logo">
+        <h1>FakeDC</h1>
+      </div>
+      <div class="footer_info">
+        <p>대표이사 : 최성혁 | 사업자정보확인 | 개인정보관리책임자 최성혁 | 사업자등록번호 106-81-12310 </p>
+        <p>서울 서초구 과천대로 111-11 마포구 상암산로 11 FakeDC | 호스팅제공자: 가비아 | 고객센터 1670-1111(평일 09시 ~ 18시) | 대표메일
+          likeaglow@gmail.com</p>
+        <p>Copyright (C) FakeDC All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <!-- 푸터 영역 끝 -->
 </body>
+
 </html>

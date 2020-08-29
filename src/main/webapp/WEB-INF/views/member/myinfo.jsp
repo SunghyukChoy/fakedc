@@ -106,10 +106,10 @@ button.confirm {
     
   </div>
   
-  <a href="..">메인페이지</a>
-  <a href="updateInfo">회원정보 수정하기</a>
+  <a href="/..">메인페이지</a>
+  <a href="/updateInfo">회원정보 수정하기</a>
   <!-- 같은 레벨의 페이지이므로 "member/"는 기재하지 않음 -->
-  <a href="leave">환골탈퇴</a>
+  <a href="/leave">환골탈퇴</a>
 
 </body>
 </html>

@@ -95,7 +95,7 @@ public class PostController extends BaseController {
 
     mv.setViewName("redirect:" + postId);
     // redirect: + 상대경로. 현재 레벨 + 상대경로
-    // "redirect:" + postId : http://localhost:8080/fakedc/post/postId
+    // "redirect:" + postId : http://localhost:8080/post/postId
     return mv;
   }
 
@@ -149,7 +149,7 @@ public class PostController extends BaseController {
       // ModelAndView 객체의 뷰페이지 설정 시 redirect가 붙으면 context path 아래의 해당 url을 찾는다.
       // 즉, 프로젝트에서 해당 url로 매핑된 메서드를 찾음.
       // context path : 어플레케이션명. server.xml에서 Context 태그의 path 속성값.
-      // 현재 프로젝트의 context path : /fakedc
+      // 현재 프로젝트의 context path : /
       // redirect: + 상대경로. // redirect:/ + 절대경로
       // mv.setViewName("redirect:/member/login?returnUrl=" +
       // URLEncoder.encode("/post/update/" + postId, "UTF-8")) :
