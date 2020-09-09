@@ -3,26 +3,14 @@ main.container {
   padding: 60px 100px 100px 100px;
 }
 
-.form-login {
+.form-register {
   display: inline-block;
   width: 400px;
   padding: 20px;
-  
 }
 
-main>h1 {
-  font-size: 30px;
-  font-weight: bold;
+.form-control {
   margin-bottom: 20px;
-}
-
-.form-control {  
-  margin-bottom: 20px;
-}
-
-.form-control label {
-  
-  text-align: left;
 }
 
 .form-control input {
@@ -34,13 +22,21 @@ main>h1 {
   border: 2px solid #aaa;
 }
 
+.form-control label {
+  display: block;
+  width: 90%;
+  height: 25px;
+  padding: 0px 5%;
+  text-align: left;
+}
+
 .form-button-group {
   display: flex;
   justify-content: space-between;
 }
 
-button.confirm,
-button.register {
+button.submit,
+button.reset {
   display: block;
   border-radius: 50px;
   height: 40px;
@@ -50,10 +46,10 @@ button.register {
   color: #ffffff;
   font-weight: bold;
   font-size: 16px;
-  cursor: pointer;  
+  cursor: pointer;
 }
 
-button.register {
+button.reset {
   background-color: #222;
 }
 
