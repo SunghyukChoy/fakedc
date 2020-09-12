@@ -30,7 +30,20 @@ main.container {
   text-align: left;
 }
 
+.form-control .form-radio-group input {
+  float: left;
+  width: auto;
+  height: 15px;
+}
+
+.form-control .form-radio-group label {
+  float: left;
+  width: auto;
+}
+
 .form-button-group {
+  padding-top: 30px;
+  clear: both;
   display: flex;
   justify-content: space-between;
 }

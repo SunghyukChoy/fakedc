@@ -13,6 +13,7 @@
   <link href="/css/register.css" rel="stylesheet" />
 
   <script src="js/common.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 
 <body>
@@ -90,13 +91,10 @@
         <label>정보 제공 동의</label>
         <div class="form-radio-group">
           <label for="rdo-offer-agree">동의</label>
-          <input type="radio" id="rdo-offer-agree" name="INFO_OFFER" value="Y" ${ (vo.INFO_OFFER=="Y" ? "checked" : "" )
-            } />
+          <input type="radio" id="rdo-offer-agree" name="INFO_OFFER" value="Y"/>
 
-          <label for="rdo-offer-disagree">동의하지 않음</label>
-          <input type="radio" id="rdo-offer-disagree" name="INFO_OFFER" value="N" ${ (vo.INFO_OFFER=="N" ? "checked"
-            : "" ) } />
-
+          <label for="rdo-offer-disagree" style="margin-left: 107px;">동의하지 않음</label>
+          <input type="radio" id="rdo-offer-disagree" name="INFO_OFFER" value="N" />
         </div>
       </div>
 
