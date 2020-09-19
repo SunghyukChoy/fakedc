@@ -10,7 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fake DC - Main</title>
 
-  <link rel="stylesheet" href="/https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
   <link href="/resources/css/base.css" rel="stylesheet" />
@@ -53,7 +53,7 @@
 
   <!-- 메뉴 시작 -->
   <nav>
-    <h2>FakeDC</h2>
+    <h2><a href="/">FakeDC</a></h2>
     <ul class="galleries">
       <li><a href="/board/pop">해외음악 갤러리</a></li>
       <li><a href="/board/major-football">해외축구 갤러리</a></li>

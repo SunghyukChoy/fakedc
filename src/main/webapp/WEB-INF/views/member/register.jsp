@@ -16,10 +16,16 @@
 <link href="/resources/css/base.css" rel="stylesheet" />
 <link href="/resources/css/register.css" rel="stylesheet" />
 
-<script src="/resources/js/common.js"></script>
+<link rel="stylesheet"
+  href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script src="/resources/js/common.js"></script>
 
 <script>
+
   // 화면이 완벽하게 렌더링 완료된 시점 (이미지 로드까지 끝난 시점)
   //$(window).load(function() {
   //$('span').css('color', '#00f');
@@ -41,14 +47,23 @@
       // 숫자만 나오게
       // 백스페이스, 화살표, 탭, 하이픈은 허용해야됨
       // 8, 9, 37, 39
+      console.log(e.keyCode);
      
 			// 길이 제한
-      if($(this).val().length == 11 && !(e.keyCode < 48 || e.keyCode > 57)) {
+      /* if($(this).val().length == 11 && !(e.keyCode < 48 || e.keyCode > 57) && !(e.keyCode < 97 || e.keyCode > 105)) {
+        e.preventDefault();
+      } */
+			
+      if($(this).val().length == 11 && !(e.keyCode < 48 || e.keyCode > 57)/*  && !(e.keyCode < 97 || e.keyCode > 105) */) {
         e.preventDefault();
       }
       
       // 허용되는 문자열
-      if(e.keyCode != 8 && e.keyCode != 9 && e.keyCode != 37 && e.keyCode != 39 && (e.keyCode < 48 || e.keyCode > 57)){
+      /* if(e.keyCode != 8 && e.keyCode != 9 && e.keyCode != 37 && e.keyCode != 39 && (e.keyCode < 48 || e.keyCode > 57) && (e.keyCode < 97 || e.keyCode > 105)) {
+        e.preventDefault();
+      } */
+      
+      if(e.keyCode != 8 && e.keyCode != 9 && e.keyCode != 37 && e.keyCode != 39 && (e.keyCode < 48 || e.keyCode > 57)/*  && (e.keyCode < 97 || e.keyCode > 105) */) {
         e.preventDefault();
       }
      
@@ -73,8 +88,57 @@
   $(document).ready(function() {
     //$('a').css('color', '#f00');
   });
+  
+  
+  // 생년월일 datepicker
+  $( function() {
+    $( "#birthday" ).datepicker({
+      dayNames: [ "일요일", "월요일","화요일","수요일","목요일","금요일","토요일"],
+      dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],
+      monthNames: ["1월", "2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"],
+      monthNamesShort: ["1월", "2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"],
+      dateFormat: "yy-mm-dd",
+    });
+  } );
+  
+ 	$(function() {
+ 	  // var birthday = document.getElementById('birthday');
+ 	  // console.log(birthday);
+ 	  // console.log($(birthday));
+ 	  // console.log($('#birthday'));
+ 	  // 
+ 	 	// $(birthday).addClass('test').addClass('t1234');
+ 	  
+ 	  // 방법1
+ 	  //$('.form-control>input').css('color', '#f00');
+ 	 	//$('#id').css('color', '#00f');
+ 	 	 	 	
+ 	 	// 방법2
+ 	 $('.form-control > input').each(function(i) {
+ 	   var $item = $(this);
+ 	   if ($item.attr('id') == 'id') {
+ 	    $item.css('color', '#00f');
+ 	   } else {
+ 	    $item.css('color', '#f00');
+ 	   }
+ 	 })
+ 	 	
+ 	 	
+ 	})
+  
 </script>
 
+<style>
+.ui-datepicker .ui-datepicker-title {
+  display: flex;
+  justify-content: center;
+  flex-direction: row-reverse;
+}
+
+.ui-datepicker-year:after {
+  content: '년'
+}
+</style>
 </head>
 
 <body>
@@ -99,13 +163,15 @@
 
   <!-- 메뉴 시작 -->
   <nav>
-    <h2>FakeDC</h2>
+    <h2>
+      <a href="/">FakeDC</a>
+    </h2>
     <ul class="galleries">
-      <li><a href="/#">해외음악 갤러리</a></li>
-      <li><a href="/#">해외축구 갤러리</a></li>
-      <li><a href="/#">어쌔신크리드 갤러리</a></li>
-      <li><a href="/#">걸그룹 여자친구 갤러리</a></li>
-      <li><a href="/#">와갤요리 갤러리</a></li>
+      <li><a href="/board/pop">해외음악 갤러리</a></li>
+      <li><a href="/board/major-football">해외축구 갤러리</a></li>
+      <li><a href="/board/assassin-creed">어쌔신크리드 갤러리</a></li>
+      <li><a href="/board/kpop-girlfriend">걸그룹 여자친구 갤러리</a></li>
+      <li><a href="/board/wagal-dish">와갤요리 갤러리</a></li>
     </ul>
   </nav>
   <!-- 메뉴 끝 -->
@@ -144,7 +210,7 @@
       </div>
 
       <div class="form-control">
-        <label for="birthday">생년월일</label> <input type="date"
+        <label for="birthday">생년월일</label> <input type="text"
           name="BIRTHDAY" id="birthday">
       </div>
 
