@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+
+<body>
+  <h1>약관 목록 </h1>
+  <ul class="result">
+    <!-- <li>
+      <a id="naver">naver</a>
+    </li>
+    <li>
+      <a id="daum">daum</a>
+    </li>
+    <li>
+      <a id="google">google</a>
+    </li> -->
+  </ul>
+
+  <script>
+    // http://localhost:8080/mgmt/terms/termsDtl.do?termsId=13
+    var termsList = [];
+
+    $.ajax({
+      url: 'http://localhost:8080/mgmt/terms/listJson.do',
+      method: 'GET',
+      // data: {}, // post
+      success: function (response) {
+        termsList = response.resultMap.termsList;
+        for (var i = 0; i < termsList.length; i++) {
+          var term = termsList[i];
+          $('.result').append('<li><a href="'+ 'http://localhost:8080/mgmt/terms/termsDtl.do?termsId='+ term.TERMS_ID +'">' +
+            term.TITLE + '</a></li>');
+        }
+
+        // for (var i in termsList) {
+        //   console.log(termsList[i].TITLE);
+        //   console.log(termsList[i].TERMS_ID);
+        //   $('.result').append('<li><a href="'+ 'http://localhost:8080/mgmt/terms/termsDtl.do?termsId='+ termsList[i].TERMS_ID +'">' +
+        //     termsList[i].TITLE + '</a></li>');
+        // }
+      },
+      error: function (response, httpStatus, error) {
+        console.log(response, httpStatus, error);
+        // alert(response.responseJSON.message);
+        alert('데이터 처리 도중 에러가 발생하였습니다. \n다시 시도하여 주시기 바랍니다. \n오류가 지속되면 관리자에게 문의 바랍니다.');
+      }
+    })
+
+    // step 1. 하드코딩
+    /* $('#naver').attr('href', 'http://www.naver.com');
+       $('#daum').attr('href', 'http://www.daum.net');
+       $('#google').attr('href', 'http://www.google.com'); */
+
+    // step 2. 스크립트를 통한 동적 html 렌더 준비
+    /* $('.result').append('<li><a href="'+ places[0].place_url +'">'+ places[0].place_name +'</a></li>');
+    $('.result').append('<li><a href="'+ places[1].place_url +'">'+ places[1].place_name +'</a></li>');
+    $('.result').append('<li><a href="'+ places[2].place_url +'">'+ places[2].place_name +'</a></li>'); */
+
+    // step 3. 결과물
+    // for (var i = 0; i < places.length; i++) {
+    //   $('.result').append('<li><a href="'+ places[i].place_url +'">'+ places[i].place_name +'</a></li>');  
+    // }
+  </script>
+
+
+</body>
+
+</html>

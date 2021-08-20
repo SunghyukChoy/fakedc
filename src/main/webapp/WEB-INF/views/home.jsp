@@ -87,11 +87,11 @@
       <!-- 갤러리를 만들 때 메인배너용 갤러리 이미지를 추가하게 하고 이 영역에 이 갤러리 내에 6시간 이내 작성된 게시물 중에서 조회수가 가장 많은순으로 3건을 표시 -->
 
       <!-- Swiper 메인 이미지-->
-      <div class="swiper-container">
+      <div id="main-banner" class="swiper-container">
         <div class="swiper-wrapper">
-          <div class="swiper-slide"></div>
-          <div class="swiper-slide"></div>
-          <div class="swiper-slide"></div>
+          <div class="swiper-slide girl-01"></div>
+          <div class="swiper-slide girl-02"></div>
+          <div class="swiper-slide girl-03"></div>
         </div>
         <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
@@ -106,16 +106,16 @@
   background-size: cover;
 }
 
-.swiper-slide:nth-child(1) {
+.swiper-slide.girl-01 {
   background-image: url('/resources/img/img01.jpg');
 }
 
-.swiper-slide:nth-child(2) {
+.swiper-slide.girl-02 {
   background-image: url('/resources/img/img02.jpg');
   background-position-y: -33px;
 }
 
-.swiper-slide:nth-child(3) {
+.swiper-slide.girl-03 {
   background-image: url('/resources/img/img03.jpg');
 }
 
@@ -131,11 +131,11 @@
     <!-- best pick 끝 -->
 
     <!-- swipe 배너 시작 -->
-    <div class="swiper-container banner-container">
+    <div id="bottom-banner" class="swiper-container banner-container">
       <div class="swiper-wrapper">
-        <div class="swiper-slide"></div>
-        <div class="swiper-slide"></div>
-        <div class="swiper-slide"></div>
+        <div class="swiper-slide girl-01"></div>
+        <div class="swiper-slide girl-02"></div>
+        <div class="swiper-slide girl-03"></div>
 
       </div>
       <!-- Add Pagination -->
@@ -197,9 +197,9 @@
 
 <!-- swipe 메인 이미지 -->
 <script>
-  var swiper = new Swiper('.swiper-container', {
+  var swiper = new Swiper('#main-banner', {
     pagination : {
-      el : '.swiper-pagination',
+      el : '#main-banner .swiper-pagination',
       dynamicBullets : true,
     },
   });
@@ -207,17 +207,15 @@
 
 <!-- swipe 배너 -->
 <script>
-  var swiper = new Swiper('.swiper-banner-container', {
-    slidesPerView : 1,
-    spaceBetween : 30,
-    loop : true,
+  var swiper = new Swiper('#bottom-banner', {
+    loop: true,
     pagination : {
-      el : '.swiper-banner-pagination',
+      el : '#bottom-banner .swiper-pagination',
       clickable : true,
     },
     navigation : {
-      nextEl : '.swiper-banner-button-next',
-      prevEl : '.swiper-banner-button-prev',
+      nextEl : '.swiper-button-next',
+      prevEl : '.swiper-button-prev',
     },
   });
 </script>
